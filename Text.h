@@ -10,21 +10,23 @@ class Text{
     public:
         int width = 5;
         int height = 7;
+        bool click[2] = {false, false};
 
         bool button(std::string text, int textColor, int x, int y, int borderWidth = 1, int borderColor = 0xffffff, int delay = 0, int clickedTextColor = 0, int clickedBorderColor = 0xffffff){
             
             int tx, ty;
             int x0 = x - borderWidth, y0 = y - borderWidth;
-
             int x1 = x + (width + 1) * text.length() + borderWidth, y1 = y + (height + 1) + borderWidth;
             
-            if(LCD.Touch(&tx, &ty)){
+            if(LCD.Touch(&tx, &ty) && !click[1]){
                 if(tx >= x0 && tx <= x1 && ty >= y0 && ty <= y1){
                     LCD.SetFontColor(clickedBorderColor);
                     LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
                     drawBox(borderColor, x0, y0, x1, y1);
                     display(text, clickedTextColor, x, y);
                     Sleep(delay);
+                    click[0] = click[1];
+                    click[1] = true;
                     return true;
                 }
                 // else{
@@ -35,21 +37,24 @@ class Text{
                 //     return false;
                 // }
             }
-            // else{
-                LCD.SetFontColor(NULL);
-                LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
-                display(text, textColor, x, y);
-                drawBox(borderColor, x0, y0, x1, y1);
-            // }
+            else if(click[0] && !click[1]){
+                LCD.Clear();
+            }
+            LCD.SetFontColor(NULL);
+            LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
+            display(text, textColor, x, y);
+            drawBox(borderColor, x0, y0, x1, y1);
+            click[0] = click[1];
+            click[1] = false;
             return false;
         }
 
         void drawBox(int color, int xi, int yi, int xf, int yf){
             LCD.SetFontColor(color);
-            LCD.DrawHorizontalLine(yi - 1, xi, xf);
-            LCD.DrawHorizontalLine(yf + 1, xi, xf);
-            LCD.DrawVerticalLine(xi - 1, yi, yf);
-            LCD.DrawVerticalLine(xf + 1, yi, yf);
+            LCD.DrawHorizontalLine(yi - 1, xi, xf + 1);
+            LCD.DrawHorizontalLine(yf + 1, xi, xf + 1);
+            LCD.DrawVerticalLine(xi - 1, yi, yf + 1);
+            LCD.DrawVerticalLine(xf + 1, yi, yf + 1);
         }
 
         void display(std::string text, int color, int x, int y){
