@@ -33,6 +33,8 @@ int main()
     int amplitude = 4;
     int period = 2;
     bool redraw = false;
+    int g = 1;
+    int t1 = 0;
 
     while (1) {
         if (redraw) {
@@ -47,7 +49,13 @@ int main()
                 text.display("c", foggyValley[2], 154, 50 + amplitude * sin(t / period));
                 text.display("o", foggyValley[1], 160, 50 + amplitude * sin(t / period));
                 text.display("me!", foggyValley[0], 166, 50 + amplitude * sin(t / period));
+                text.display("Gravity", paleMoss[0], 136, 58 + 0.5 * g * t1 * t1);
                 ++t;
+                
+                if(58 + 0.5 * g * t1 * t1 >= 240) {
+                    t1 = 0;
+                }
+                ++t1;
                 redraw = true;
 
                 if(LCD.Touch(&tx, &ty)){
@@ -104,10 +112,14 @@ int main()
 void fish(FEHImage Image, int* x){
     Image.Open("./Image/cod.png");
     for(int i = 0; i < 20; ++i){
-        Image.Draw(*x-50*i, 12*i);
+        int tempx = *x-50*i;
+        while(tempx <= 0){
+            tempx += 320;
+        }
+        Image.Draw(tempx, 12*i);
     }
     Image.Close();
-    (x != 0) ? --*x : *x = 320;
+    (*x > 0) ? --*x : *x = 320;
 }
 //vector of pixel vectors <color, x, y>
 void draw(std::vector<std::vector<int>> *image, int x, int y){
