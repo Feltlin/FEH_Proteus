@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# FEH documentation ignore
+simulator_libraries/
+*.o
+*.d
+*.exe
+
 # User-specific files
 *.rsuser
 *.suo
