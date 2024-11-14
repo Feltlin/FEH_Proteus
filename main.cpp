@@ -20,6 +20,13 @@ int main()
     int state = 0;
     float tx, ty;
 
+    //Color gradient from light to dark.
+    std::vector<int> springBuds = {0xD9ED92, 0xB5E48C, 0x99D98C, 0x76C893, 0x52B69A, 0x34A0A4, 0x168AAD, 0x1A759F, 0x1E6091, 0x184E77};
+    std::vector<int> paleMoss = {0xCAD2C5, 0x84A98C, 0x52796F, 0x354F52, 0x2F3E46};
+    std::vector<int> lava = {0xFFBA08, 0xFAA307, 0xF48C06, 0xE85D04, 0xDC2F02, 0xD00000, 0x9D0208, 0x6A040F, 0x370617, 0x03071E};
+    std::vector<int> alpenglow = {0xFFCDB2, 0xFFB4A2, 0xE5989B, 0xB5838D, 0x6D6875};
+    std::vector<int> foggyValley = {0xE5E8B6, 0xB4C4AE, 0xA2ABAB, 0x7D869C, 0x586994};
+
     int x = 320;
     int y = 50;
     int t = 0;
@@ -35,11 +42,11 @@ int main()
         switch(state){
             case 0:
                 fish(Image, &x);
-                text.display("W", 0x586994, 136, 50 + amplitude * sin(t / period));
-                text.display("el", 0x7D869C, 142, 50 + amplitude * sin(t / period));
-                text.display("c", 0xA2ABAB, 154, 50 + amplitude * sin(t / period));
-                text.display("o", 0xB4C4AE, 160, 50 + amplitude * sin(t / period));
-                text.display("me!", 0xE5E8B6, 166, 50 + amplitude * sin(t / period));
+                text.display("W", foggyValley[4], 136, 50 + amplitude * sin(t / period));
+                text.display("el", foggyValley[3], 142, 50 + amplitude * sin(t / period));
+                text.display("c", foggyValley[2], 154, 50 + amplitude * sin(t / period));
+                text.display("o", foggyValley[1], 160, 50 + amplitude * sin(t / period));
+                text.display("me!", foggyValley[0], 166, 50 + amplitude * sin(t / period));
                 ++t;
                 redraw = true;
 
@@ -50,29 +57,41 @@ int main()
                 break;
 
             case 1:
-                if(text.button("Touch me", 0xF2542D, 136, 100, 2, 0xffffff, 100, 0xffffff - 0xF2542D)){
+                if(text.button("Touch me", lava[0], 136, 100, 2, lava[0], 100, 0xffffff - lava[0])){
                     text.display("YOU WILL GET TOUCHED.", 0xff0000, 100, 58);
                 }
-                if(text.button("Credit",  0xF2542D, 136, 120, 2, 0xffffff, 100, 0xffffff - 0xF2542D)){
+                if(text.button("Credit",  lava[1], 136, 120, 2, lava[1], 100, 0xffffff - lava[1])){
                     state = 2;
                     redraw = true;
                 }
+                if(text.button("Start", lava[2], 136, 140, 2, lava[2], 100, 0xffffff - lava[2])){
+                    state = 10;
+                    redraw = true;
+                }
                 break;
+
             case 2:
                 text.display("Creator:", 0x586994, 100, 50);
                 text.display("Junhao Liu", 0x7D869C, 100, 58);
                 text.display("Anthony Ezzone", 0xA2ABAB, 100, 66);
-                if(text.button("Back", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                text.display("Font: Mojang", 0x157A6E, 100, 82);
+                text.display("https://www.dafont.com/mojang.font", 0x499F68, 100, 90);
+                text.display("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 0x77B28C, 100, 98);
+                text.display("abcdefghijklmnopqrstuvwxyz", 0x77B28C, 100, 106);
+                text.display("0123456789", 0x77B28C, 100, 114);
+                text.display("+-*/=%\"\'#$@&_(){}<>[]", 0xC2C5BB, 100, 122);
+                text.display(",.;:?!^~`", 0xC2C5BB, 100, 130);
+                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                     state = 1;
                     redraw = true;
                 }
                 break;
+
             case 10:
-                text.display("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 0xff00ff, 100, 100);
-                text.display("abcdefghijklmnopqrstuvwxyz", 0xff00ff, 100, 108);
-                text.display("0123456789", 0xff00ff, 100, 116);
-                text.display("+-*/=%\"\'#$@&_(){}<>[]", 0xff00ff, 100, 124);
-                text.display(",.;:?!^~`", 0xff00ff, 100, 132);
+                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    state = 1;
+                    redraw = true;
+                }
                 break;
         }
         LCD.Update();
