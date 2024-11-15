@@ -17,25 +17,19 @@ class Text{
             int tx, ty;
             int x0 = x - borderWidth, y0 = y - borderWidth;
             int x1 = x + (width + 1) * text.length() + borderWidth, y1 = y + (height + 1) + borderWidth;
+            click[0] = click[1];
+            click[1] = LCD.Touch(&tx, &ty);
+            bool touch = tx >= x0 && tx <= x1 && ty >= y0 && ty <= y1;
             
-            if(LCD.Touch(&tx, &ty) && !click[1]){
-                if(tx >= x0 && tx <= x1 && ty >= y0 && ty <= y1){
+            if(!click[0] && click[1]){
+                if(touch){
                     LCD.SetFontColor(clickedBorderColor);
                     LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
                     drawBox(borderColor, x0, y0, x1, y1);
                     display(text, clickedTextColor, x, y);
                     Sleep(delay);
-                    click[0] = click[1];
-                    click[1] = true;
                     return true;
                 }
-                // else{
-                //     LCD.SetFontColor(NULL);
-                //     LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
-                //     display(text, textColor, x, y);
-                //     drawBox(borderColor, x0, y0, x1, y1);
-                //     return false;
-                // }
             }
             else if(click[0] && !click[1]){
                 LCD.Clear();
