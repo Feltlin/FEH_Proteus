@@ -1,10 +1,11 @@
 #ifndef TEXT
 #define TEXT
 
-#include <vector>
-#include <string>
 #include "simulator_libraries/FEHLCD.h"
 #include "simulator_libraries/FEHUtility.h"
+
+#include <vector>
+#include <string>
 
 class Text{
     public:
