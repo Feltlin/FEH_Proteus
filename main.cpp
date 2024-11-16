@@ -32,15 +32,9 @@ int main()
     int t = 0;
     int amplitude = 4;
     int period = 2;
-    bool redraw = false;
-    int g = 1;
-    int t1 = 0;
 
     while (1) {
-        if (redraw) {
-            LCD.Clear();
-            redraw = false;
-        }
+        LCD.Clear();
         switch(state){
             case 0:
                 fish(Image, &x);
@@ -49,18 +43,10 @@ int main()
                 text.display("c", foggyValley[2], 154, 50 + amplitude * sin(t / period));
                 text.display("o", foggyValley[1], 160, 50 + amplitude * sin(t / period));
                 text.display("me!", foggyValley[0], 166, 50 + amplitude * sin(t / period));
-                text.display("Gravity", paleMoss[0], 136, 58 + 0.5 * g * t1 * t1);
                 ++t;
-                
-                if(58 + 0.5 * g * t1 * t1 >= 240) {
-                    t1 = 0;
-                }
-                ++t1;
-                redraw = true;
 
-                if(LCD.Touch(&tx, &ty)){
+                if(LCD.Touch(&tx, &ty, false)){
                     state = 1;
-                    redraw = true;
                 }
                 break;
 
@@ -70,11 +56,9 @@ int main()
                 }
                 if(text.button("Credit",  lava[1], 136, 120, 2, lava[1], 100, 0xffffff - lava[1])){
                     state = 2;
-                    redraw = true;
                 }
                 if(text.button("Start", lava[2], 136, 140, 2, lava[2], 100, 0xffffff - lava[2])){
                     state = 10;
-                    redraw = true;
                 }
                 break;
 
@@ -91,20 +75,17 @@ int main()
                 text.display(",.;:?!^~`", 0xC2C5BB, 100, 130);
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                     state = 1;
-                    redraw = true;
                 }
                 break;
 
             case 10:
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                     state = 1;
-                    redraw = true;
                 }
                 break;
         }
         LCD.Update();
     }
-
 
     return 0;
 }
