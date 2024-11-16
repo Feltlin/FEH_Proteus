@@ -8,14 +8,16 @@
 #include <math.h>
 
 #include "Text.h"
+#include "Map.h"
 
 void fish(FEHImage Image, int* x);
 void draw(std::vector<std::vector<int>> *image, int x, int y);
 
 int main()
 {
-    //Screen max: w=320, h=240
+    //Screen max: w=320=16*20, h=240=16*15
     Text text;
+    Map map;
     FEHImage Image;
     int state = 0;
     float tx, ty;
@@ -114,10 +116,12 @@ int main()
                 break;
 
             case 10:
+                map.display(&(map.moss), 0, 0);
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                     state = 1;
                 }
                 break;
+            
         }
         LCD.Update();
     }
