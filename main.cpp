@@ -86,7 +86,22 @@ int main()
 
             case 3:
                 text.display("Instruction", 0x586994, 100, 50);
-                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                text.display("In this game you are a hero fighting his way through ", foggyValley[0], 5, 60);
+                text.display("the land of malpatria, which has been taken over by ", foggyValley[1], 5, 68);
+                text.display("evil mobs that roam throughout the world. You are ", foggyValley[2], 5, 76);
+                text.display("set on your journey with a sword in hand and a ", foggyValley[3], 5, 84);
+                text.display("simple goal to travel as far as you can. The only ", foggyValley[4], 5, 92);
+                text.display("instructions for this game are simple, you must ", foggyValley[0], 5, 100);
+                text.display("travel upward to progress the game. Kill as many ", foggyValley[1], 5, 108);
+                text.display("enemies as possible and upgrade your sword along ", foggyValley[2], 5, 116);
+                text.display("the way. You will take damage from mobs if you let ", foggyValley[3], 5, 124);
+                text.display("them hit you, but mobs can drop healing items to ", foggyValley[4], 5, 132);
+                text.display("restore health along the way. Points can be earned ", foggyValley[0], 5, 140);
+                text.display("by defeating mobs and traveling a greater distance. ", foggyValley[1], 5, 148);
+                text.display("The score will be totaled up and put on the ", foggyValley[2], 5, 156);
+                text.display("leaderboard in the statistics section. Have fun!", foggyValley[3], 5, 164);
+                
+                if(text.button("Back", 0xB4C4AE, 100, 180, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                     state = 1;
                 }
                 break;
