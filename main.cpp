@@ -8,6 +8,7 @@
 #include "Text.h"
 #include "Map.h"
 #include "Player.h"
+#include "Key.h"
 
 void fish(FEHImage Image, int* x);
 void draw(std::vector<std::vector<int>> *image, int x, int y);
@@ -18,6 +19,8 @@ int main()
 {
     //Screen max: w=320=16*20, h=240=16*15
     Text text;
+    Text moveUp, moveLeft, moveRight;
+    Key keyW, keyA, keyD;
     Map map;
     Player player(10, 8);
     FEHImage Image;
@@ -126,18 +129,31 @@ int main()
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                     state = 1;
                 }
-                if(text.button("Move Up", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
-                    click[0] = click[1];
-                    click[1] = true;
-                }
-                else{
-                    click[0] = click[1];
-                    click[1] = false;
-                }
-                if(!click[0] && click[1]){
+                if(keyW.bind('W')){
                     map.moveUp(&(map.moss));
+                }
+                else if(keyA.bind('A')){
                     player.moveLeft();
                 }
+                else if(keyD.bind('D')){
+                    player.moveRight();
+                }
+
+                // if(moveUp.button("^", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                //     if(!moveUp.click[0] && moveUp.click[1]){
+                //         map.moveUp(&(map.moss));
+                //     }
+                // }
+                // if(moveLeft.button("<", 0xB4C4AE, 70, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                //     if(!moveLeft.click[0] && moveLeft.click[1]){
+                //         player.moveLeft();
+                //     }
+                // }
+                // if(moveRight.button(">", 0xB4C4AE, 130, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                //     if(!moveRight.click[0] && moveRight.click[1]){
+                //         player.moveRight();
+                //     }
+                // }
                 break;
             
         }

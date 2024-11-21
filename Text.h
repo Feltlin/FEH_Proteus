@@ -19,7 +19,7 @@ class Text{
             int x0 = x - borderWidth, y0 = y - borderWidth;
             int x1 = x + (width + 1) * text.length() + borderWidth, y1 = y + (height + 1) + borderWidth;
             
-            if(LCD.Touch(&tx, &ty, false) && !click[1]){
+            if(LCD.Touch(&tx, &ty, false)){
                 if(tx >= x0 && tx <= x1 && ty >= y0 && ty <= y1){
                     LCD.SetFontColor(clickedBorderColor);
                     LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
