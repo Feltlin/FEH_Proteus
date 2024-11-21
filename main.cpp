@@ -13,6 +13,8 @@
 void fish(FEHImage Image, int* x);
 void draw(std::vector<std::vector<int>> *image, int x, int y);
 
+int click[] = {false, false};
+
 int main()
 {
     //Screen max: w=320=16*20, h=240=16*15
@@ -84,6 +86,17 @@ int main()
                 map.display(&(map.moss), 0, 0);
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                     state = 1;
+                }
+                if(text.button("Move Up", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    click[0] = click[1];
+                    click[1] = true;
+                }
+                else{
+                    click[0] = click[1];
+                    click[1] = false;
+                }
+                if(!click[0] && click[1]){
+                    map.moveUp(&(map.moss));
                 }
                 break;
             
