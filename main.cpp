@@ -54,18 +54,24 @@ int main()
                 if(text.button("Touch me", lava[0], 136, 100, 2, lava[0], 100, 0xffffff - lava[0])){
                     text.display("YOU WILL GET TOUCHED.", 0xff0000, 100, 58);
                 }
-                if(text.button("Credit",  lava[1], 136, 120, 2, lava[1], 100, 0xffffff - lava[1])){
+                if(text.button("Start",  lava[1], 136, 120, 2, lava[1], 100, 0xffffff - lava[1])){
+                    state = 10;
+                }
+                if(text.button("Credit", lava[2], 136, 140, 2, lava[2], 100, 0xffffff - lava[2])){
                     state = 2;
                 }
-                if(text.button("Start", lava[2], 136, 140, 2, lava[2], 100, 0xffffff - lava[2])){
-                    state = 10;
+                if(text.button("Instruction", lava[3], 136, 160, 2, lava[3], 100, 0xffffff - lava[3])){
+                    state = 3;
+                }
+                if(text.button("Stats", lava[4], 136, 180, 2, lava[4], 100, 0xffffff - lava[4])){
+                    state = 4;
                 }
                 break;
 
             case 2:
-                text.display("Creator:", 0x586994, 100, 50);
-                text.display("Junhao Liu", 0x7D869C, 100, 58);
-                text.display("Anthony Ezzone", 0xA2ABAB, 100, 66);
+                text.display("Creator:", foggyValley[4], 100, 50);
+                text.display("Junhao Liu", foggyValley[3], 100, 58);
+                text.display("Anthony Ezzone", foggyValley[2], 100, 66);
                 text.display("Font: Mojang", 0x157A6E, 100, 82);
                 text.display("https://www.dafont.com/mojang.font", 0x499F68, 100, 90);
                 text.display("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 0x77B28C, 100, 98);
@@ -73,6 +79,20 @@ int main()
                 text.display("0123456789", 0x77B28C, 100, 114);
                 text.display("+-*/=%\"\'#$@&_(){}<>[]", 0xC2C5BB, 100, 122);
                 text.display(",.;:?!^~`", 0xC2C5BB, 100, 130);
+                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    state = 1;
+                }
+                break;
+
+            case 3:
+                text.display("Instruction", 0x586994, 100, 50);
+                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    state = 1;
+                }
+                break;
+
+            case 4:
+                text.display("Stats", 0x586994, 100, 50);
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                     state = 1;
                 }
