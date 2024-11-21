@@ -9,15 +9,19 @@
 
 #include "Text.h"
 #include "Map.h"
+#include "Player.h"
 
 void fish(FEHImage Image, int* x);
 void draw(std::vector<std::vector<int>> *image, int x, int y);
+
+int click[] = {false, false};
 
 int main()
 {
     //Screen max: w=320=16*20, h=240=16*15
     Text text;
     Map map;
+    Player player(10, 8);
     FEHImage Image;
     int state = 0;
     float tx, ty;
@@ -56,11 +60,17 @@ int main()
                 if(text.button("Touch me", lava[0], 136, 100, 2, lava[0], 100, 0xffffff - lava[0])){
                     text.display("YOU WILL GET TOUCHED.", 0xff0000, 100, 58);
                 }
-                if(text.button("Credit",  lava[1], 136, 120, 2, lava[1], 100, 0xffffff - lava[1])){
+                if(text.button("Start",  lava[1], 136, 120, 2, lava[1], 100, 0xffffff - lava[1])){
+                    state = 10;
+                }
+                if(text.button("Credit", lava[2], 136, 140, 2, lava[2], 100, 0xffffff - lava[2])){
                     state = 2;
                 }
-                if(text.button("Start", lava[2], 136, 140, 2, lava[2], 100, 0xffffff - lava[2])){
-                    state = 10;
+                if(text.button("Instruction", lava[3], 136, 160, 2, lava[3], 100, 0xffffff - lava[3])){
+                    state = 3;
+                }
+                if(text.button("Stats", lava[4], 136, 180, 2, lava[4], 100, 0xffffff - lava[4])){
+                    state = 4;
                 }
                 if (tigrKeyHeld(LCD.screen, 'A')) {
                     text.display("A pressed!", foggyValley[0], 166, 50);
@@ -68,9 +78,9 @@ int main()
                 break;
 
             case 2:
-                text.display("Creator:", 0x586994, 100, 50);
-                text.display("Junhao Liu", 0x7D869C, 100, 58);
-                text.display("Anthony Ezzone", 0xA2ABAB, 100, 66);
+                text.display("Creator:", foggyValley[4], 100, 50);
+                text.display("Junhao Liu", foggyValley[3], 100, 58);
+                text.display("Anthony Ezzone", foggyValley[2], 100, 66);
                 text.display("Font: Mojang", 0x157A6E, 100, 82);
                 text.display("https://www.dafont.com/mojang.font", 0x499F68, 100, 90);
                 text.display("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 0x77B28C, 100, 98);
@@ -83,10 +93,52 @@ int main()
                 }
                 break;
 
-            case 10:
-                map.display(&(map.moss), 0, 0);
+            case 3:
+                text.display("Instruction", 0x586994, 100, 50);
+                text.display("In this game you are a hero fighting his way through ", foggyValley[0], 5, 60);
+                text.display("the land of malpatria, which has been taken over by ", foggyValley[1], 5, 68);
+                text.display("evil mobs that roam throughout the world. You are ", foggyValley[2], 5, 76);
+                text.display("set on your journey with a sword in hand and a ", foggyValley[3], 5, 84);
+                text.display("simple goal to travel as far as you can. The only ", foggyValley[4], 5, 92);
+                text.display("instructions for this game are simple, you must ", foggyValley[0], 5, 100);
+                text.display("travel upward to progress the game. Kill as many ", foggyValley[1], 5, 108);
+                text.display("enemies as possible and upgrade your sword along ", foggyValley[2], 5, 116);
+                text.display("the way. You will take damage from mobs if you let ", foggyValley[3], 5, 124);
+                text.display("them hit you, but mobs can drop healing items to ", foggyValley[4], 5, 132);
+                text.display("restore health along the way. Points can be earned ", foggyValley[0], 5, 140);
+                text.display("by defeating mobs and traveling a greater distance. ", foggyValley[1], 5, 148);
+                text.display("The score will be totaled up and put on the ", foggyValley[2], 5, 156);
+                text.display("leaderboard in the statistics section. Have fun!", foggyValley[3], 5, 164);
+                
+                if(text.button("Back", 0xB4C4AE, 100, 180, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    state = 1;
+                }
+                break;
+
+            case 4:
+                text.display("Stats", 0x586994, 100, 50);
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                     state = 1;
+                }
+                break;
+
+            case 10:
+                map.display(&(map.moss), 0, 0);
+                player.display();
+                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    state = 1;
+                }
+                if(text.button("Move Up", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    click[0] = click[1];
+                    click[1] = true;
+                }
+                else{
+                    click[0] = click[1];
+                    click[1] = false;
+                }
+                if(!click[0] && click[1]){
+                    map.moveUp(&(map.moss));
+                    player.moveLeft();
                 }
                 break;
             
