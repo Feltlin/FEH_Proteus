@@ -3,7 +3,6 @@
 
 #include "simulator_libraries/FEHLCD.h"
 #include "simulator_libraries/FEHImages.h"
-#include "simulator_libraries/FEHUtility.h"
 
 #include <algorithm>
 #include <vector>

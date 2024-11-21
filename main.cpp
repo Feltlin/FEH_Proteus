@@ -1,7 +1,5 @@
 #include "simulator_libraries/FEHLCD.h"
-#include "simulator_libraries/LCDColors.h"
 #include "simulator_libraries/FEHImages.h"
-#include "simulator_libraries/FEHUtility.h"
 
 #include <vector>
 #include <string>
