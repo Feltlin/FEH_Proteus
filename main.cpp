@@ -9,6 +9,7 @@
 
 #include "Text.h"
 #include "Map.h"
+#include "Player.h"
 
 void fish(FEHImage Image, int* x);
 void draw(std::vector<std::vector<int>> *image, int x, int y);
@@ -20,6 +21,7 @@ int main()
     //Screen max: w=320=16*20, h=240=16*15
     Text text;
     Map map;
+    Player player(10, 8);
     FEHImage Image;
     int state = 0;
     float tx, ty;
@@ -119,6 +121,7 @@ int main()
 
             case 10:
                 map.display(&(map.moss), 0, 0);
+                player.display();
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                     state = 1;
                 }
@@ -132,6 +135,7 @@ int main()
                 }
                 if(!click[0] && click[1]){
                     map.moveUp(&(map.moss));
+                    player.moveLeft();
                 }
                 break;
             
