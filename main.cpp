@@ -72,6 +72,9 @@ int main()
                 if(text.button("Stats", lava[4], 136, 180, 2, lava[4], 100, 0xffffff - lava[4])){
                     state = 4;
                 }
+                if (tigrKeyHeld(LCD.screen, 'A')) {
+                    text.display("A pressed!", foggyValley[0], 166, 50);
+                }
                 break;
 
             case 2:

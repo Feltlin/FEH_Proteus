@@ -12,6 +12,7 @@
 class Map{
     public:
         FEHImage Image;
+  
         int height = 15, width = 20;
 
         void display(std::vector<std::vector<int>> *map, int x, int y){
