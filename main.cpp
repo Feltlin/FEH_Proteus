@@ -130,13 +130,13 @@ int main()
                     state = 1;
                 }
                 if(keyW.bind('W')){
-                    map.moveUp(&(map.moss));
+                    map.moveUp(&(map.moss), &player);
                 }
                 else if(keyA.bind('A')){
-                    player.moveLeft();
+                    map.moveLeft(&(map.moss), &player);
                 }
                 else if(keyD.bind('D')){
-                    player.moveRight();
+                    map.moveRight(&(map.moss), &player);
                 }
 
                 // if(moveUp.button("^", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){

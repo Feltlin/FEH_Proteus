@@ -20,19 +20,6 @@ class Player{
             Image.Close();
         }
 
-        void moveLeft(){
-            if(x > 0){
-                --x;
-            }
-            display();
-        }
-
-        void moveRight(){
-            if(x < 19){
-                ++x;
-            }
-            display();
-        }
 };
 
 #endif

@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 
+#include "Player.h"
+
 class Map{
     public:
         FEHImage Image;
@@ -37,17 +39,46 @@ class Map{
             }
         }
 
-        void moveUp(std::vector<std::vector<int>> *map){
-            
+        void moveUp(std::vector<std::vector<int>> *map, Player *player){
             std::vector<int> newRow = {0, 1, 2, 1, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1};
-            if(startRow == 0){
-                //Use a random generator to generate the new row of map.
-                for(int i = 0; i < height; ++i){
-                    map->insert(map->begin(), newRow);
-                }
-                startRow += height;
+            switch((*map)[startRow + player->y - 1][player->x]){
+                case 2:
+                    break;
+                default:
+                    if(startRow == 0){
+                        //Use a random generator to generate the new row of map.
+                        for(int i = 0; i < height; ++i){
+                            map->insert(map->begin(), newRow);
+                        }
+                        startRow += height;
+                    }
+                    --startRow;
             }
-            --startRow;
+            
+        }
+
+        void moveLeft(std::vector<std::vector<int>> *map, Player *player){
+            if(player->x > 0){
+                switch((*map)[startRow + player->y][player->x - 1]){
+                    case 2:
+                        break;
+                    default:
+                        --player->x;
+                }
+            }
+            player->display();
+        }
+
+        void moveRight(std::vector<std::vector<int>> *map, Player *player){
+            if(player->x < 19){
+                switch((*map)[startRow + player->y][player->x + 1]){
+                    case 2:
+                        break;
+                    default:
+                        ++player->x;
+                }
+            }
+            player->display();
         }
 
         //width=20, height=15
