@@ -13,9 +13,10 @@ class Map{
         FEHImage Image;
   
         int height = 15, width = 20;
+        int startRow = 0;
 
         void display(std::vector<std::vector<int>> *map, int x, int y){
-            for(int row = 0; row < std::min(int(map->size()), height); ++row){
+            for(int row = startRow; row < startRow + height; ++row){
                 for(int column = 0; column < std::min(int((*map)[row].size()), width); ++column){
                     switch((*map)[row][column]){
                         case 0:
@@ -24,18 +25,29 @@ class Map{
                         case 1:
                             Image.Open("./Image/PaleMoss.png");
                             break;
+
+                        case 2:
+                            Image.Open("./Image/BrickRoad.png");
+                            break;
                         
                     }
-                    Image.Draw(x + column * 16, y + row * 16);
+                    Image.Draw(x + column * 16, y + (row - startRow) * 16);
                     Image.Close();
                 }
             }
         }
 
         void moveUp(std::vector<std::vector<int>> *map){
-            //Use a random generator to generate the new row of map.
-            std::vector<int> newRow = {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1};
-            map->insert(map->begin(), newRow);
+            
+            std::vector<int> newRow = {0, 1, 2, 1, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1};
+            if(startRow == 0){
+                //Use a random generator to generate the new row of map.
+                for(int i = 0; i < height; ++i){
+                    map->insert(map->begin(), newRow);
+                }
+                startRow += height;
+            }
+            --startRow;
         }
 
         //width=20, height=15
