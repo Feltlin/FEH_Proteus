@@ -19,10 +19,10 @@ int main()
 {
     //Screen max: w=320=16*20, h=240=16*15
     Text text;
-    Text moveUp, moveLeft, moveRight;
-    Key keyW, keyA, keyD;
+    Text moveUp, moveLeft, moveRight, moveDown;
+    Key keyW, keyA, keyD, keyS;
     Map map;
-    Player player(10, 8);
+    Player player(10, 14);
     FEHImage Image;
     int state = 0;
     float tx, ty;
@@ -138,22 +138,29 @@ int main()
                 else if(keyD.bind('D')){
                     map.moveRight(&(map.moss), &player);
                 }
-
-                // if(moveUp.button("^", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
-                //     if(!moveUp.click[0] && moveUp.click[1]){
-                //         map.moveUp(&(map.moss));
-                //     }
-                // }
-                // if(moveLeft.button("<", 0xB4C4AE, 70, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
-                //     if(!moveLeft.click[0] && moveLeft.click[1]){
-                //         player.moveLeft();
-                //     }
-                // }
-                // if(moveRight.button(">", 0xB4C4AE, 130, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
-                //     if(!moveRight.click[0] && moveRight.click[1]){
-                //         player.moveRight();
-                //     }
-                // }
+                else if(keyS.bind('S')){
+                    map.moveDown(&(map.moss), &player);
+                }
+                if(moveUp.button("^", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    if(!moveUp.click[0] && moveUp.click[1]){
+                        map.moveUp(&(map.moss), &player);
+                    }
+                }
+                if(moveLeft.button("<", 0xB4C4AE, 70, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    if(!moveLeft.click[0] && moveLeft.click[1]){
+                        map.moveLeft(&(map.moss), &player);
+                    }
+                }
+                if(moveRight.button(">", 0xB4C4AE, 130, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    if(!moveRight.click[0] && moveRight.click[1]){
+                        map.moveRight(&(map.moss), &player);
+                    }
+                }
+                if(moveDown.button("v", 0xB4C4AE, 100, 120, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                    if(!moveDown.click[0] && moveDown.click[1]){
+                        map.moveDown(&(map.moss), &player);
+                    }
+                }
                 break;
             
         }
