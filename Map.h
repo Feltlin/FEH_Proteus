@@ -7,17 +7,25 @@
 #include <algorithm>
 #include <vector>
 #include <string>
+#include <random>
+
+#include "PerlinNoise/PerlinNoise.hpp"
 
 #include "Player.h"
 
 class Map{
     public:
         FEHImage Image;
-  
+        siv::PerlinNoise perlin;
         int height = 15, width = 20;
         int startRow = 0;
+        //width=20, height=15
+        std::vector<std::vector<int>> moss;
 
         void display(std::vector<std::vector<int>> *map, int x, int y){
+            if(moss.size() == 0){
+                moss.resize(height, std::vector<int>(width, 1));
+            }
             for(int row = startRow; row < startRow + height; ++row){
                 for(int column = 0; column < std::min(int((*map)[row].size()), width); ++column){
                     switch((*map)[row][column]){
@@ -31,6 +39,8 @@ class Map{
                         case 2:
                             Image.Open("./Image/BrickRoad.png");
                             break;
+                        default:
+                            Image.Open("./Image/PaleMoss.png");
                         
                     }
                     Image.Draw(x + column * 16, y + (row - startRow) * 16);
@@ -51,8 +61,16 @@ class Map{
                     else if(startRow == 0){
                         //Use a random generator to generate the new row of map.
                         for(int i = 0; i < height; ++i){
+                            newRow.clear();
+                            for(int j = 0; j < width; ++j){
+                                newRow.push_back(2*perlin.octave2D_01(j, i, 4));
+                            }
                             map->insert(map->begin(), newRow);
                         }
+
+                        // for(int i = 0; i < height; ++i){
+                        //     map->insert(map->begin(), newRow);
+                        // }
                         startRow += height;
                         --startRow;
                     }
@@ -72,6 +90,7 @@ class Map{
                         --player->x;
                 }
             }
+            player->direction = 'L';
             player->display();
         }
 
@@ -84,6 +103,7 @@ class Map{
                         ++player->x;
                 }
             }
+            player->direction = 'R';
             player->display();
         }
 
@@ -98,25 +118,5 @@ class Map{
             }
         }
 
-        //width=20, height=15
-        std::vector<std::vector<int>> moss = 
-        {
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-
-        };
 };
 #endif
