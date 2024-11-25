@@ -19,6 +19,7 @@ class Map{
         siv::PerlinNoise perlin;
         int height = 15, width = 20;
         int startRow = 0;
+        int factor = 1;
         //width=20, height=15
         std::vector<std::vector<int>> moss;
 
@@ -63,7 +64,7 @@ class Map{
                         for(int i = 0; i < height; ++i){
                             newRow.clear();
                             for(int j = 0; j < width; ++j){
-                                newRow.push_back(2*perlin.octave2D_01(j, i, 4));
+                                newRow.push_back(2*perlin.octave2D_01(factor*j, factor*i, 4));
                             }
                             map->insert(map->begin(), newRow);
                         }
@@ -73,6 +74,7 @@ class Map{
                         // }
                         startRow += height;
                         --startRow;
+                        ++factor;
                     }
                     else{
                         --startRow;
