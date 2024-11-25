@@ -8,7 +8,6 @@ simulator_libraries/
 *.o
 *.d
 *.exe
-*.psd
 
 # User-specific files
 *.rsuser
