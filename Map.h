@@ -34,12 +34,45 @@ class Map{
                             continue;
                         
                         case 1:
-                            Image.Open("./Image/PaleMoss.png");
+                            Image.Open("./Image/Grass.png");
                             break;
 
                         case 2:
-                            Image.Open("./Image/BrickRoad.png");
+                            Image.Open("./Image/FloweryGrass.png");
                             break;
+
+                        case 3:
+                            Image.Open("./Image/Dirt.png");
+                            break;
+
+                        case 4:
+                            Image.Open("./Image/Sand.png");
+                            break;
+
+                        case 5:
+                            Image.Open("./Image/RedSand.png");
+                            break;
+
+                        case 6:
+                            Image.Open("./Image/Stone.png");
+                            break;
+
+                        case 7:
+                            Image.Open("./Image/StoneBrick.png");
+                            break;
+
+                        case 8:
+                            Image.Open("./Image/Water.png");
+                            break;
+
+                        case 9:
+                            Image.Open("./Image/Lava.png");
+                            break;
+
+                        case 10:
+                            Image.Open("./Image/Shore.png");
+                            break;
+
                         default:
                             Image.Open("./Image/PaleMoss.png");
                         
@@ -64,7 +97,7 @@ class Map{
                         for(int i = 0; i < height; ++i){
                             newRow.clear();
                             for(int j = 0; j < width; ++j){
-                                newRow.push_back(2*perlin.octave2D_01(factor*j, factor*i, 4));
+                                newRow.push_back(10*perlin.octave2D_01(factor*j, factor*i, 4));
                             }
                             map->insert(map->begin(), newRow);
                         }
