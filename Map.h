@@ -9,7 +9,7 @@
 #include <string>
 #include <random>
 
-#include "PerlinNoise/PerlinNoise.hpp"
+#include "PerlinNoise.hpp"
 
 #include "Player.h"
 
