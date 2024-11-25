@@ -23,7 +23,7 @@ class Text{
                 if(tx >= x0 && tx <= x1 && ty >= y0 && ty <= y1){
                     LCD.SetFontColor(clickedBorderColor);
                     LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
-                    drawBox(borderColor, x0, y0, x1, y1);
+                    drawBorder(borderColor, x0, y0, x1, y1);
                     display(text, clickedTextColor, x, y);
                     click[0] = click[1];
                     click[1] = true;
@@ -33,18 +33,23 @@ class Text{
             LCD.SetFontColor(NULL);
             LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
             display(text, textColor, x, y);
-            drawBox(borderColor, x0, y0, x1, y1);
+            drawBorder(borderColor, x0, y0, x1, y1);
             click[0] = click[1];
             click[1] = false;
             return false;
         }
 
-        void drawBox(int color, int xi, int yi, int xf, int yf){
+        void drawBorder(int color, int xi, int yi, int xf, int yf){
             LCD.SetFontColor(color);
             LCD.DrawHorizontalLine(yi - 1, xi, xf + 1);
             LCD.DrawHorizontalLine(yf + 1, xi, xf + 1);
             LCD.DrawVerticalLine(xi - 1, yi, yf + 1);
             LCD.DrawVerticalLine(xf + 1, yi, yf + 1);
+        }
+
+        void drawBox(int color, int xi, int yi, int xf, int yf){
+            LCD.SetFontColor(color);
+            LCD.FillRectangle(xi, yi, xf - xi + 1, yf - yi + 1);
         }
 
         void display(std::string text, int color, int x, int y){

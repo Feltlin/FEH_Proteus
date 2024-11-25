@@ -24,7 +24,7 @@ int main()
     Map map;
     Player player(10, 14);
     FEHImage Image;
-    int state = 0;
+    int state = 0, menuState = 0;
     float tx, ty;
 
     //Color gradient from light to dark.
@@ -126,41 +126,56 @@ int main()
             case 10:
                 map.display(&(map.moss), 0, 0);
                 player.display();
-                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
-                    state = 1;
+                switch(menuState){
+                    case 0:
+                        if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                            state = 1;
+                        }
+                        if(text.button("Menu", 0xB4C4AE, 100, 170, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                            menuState = 1;
+                        }
+                        if(keyW.bind('W')){
+                            map.moveUp(&(map.moss), &player);
+                        }
+                        else if(keyA.bind('A')){
+                            map.moveLeft(&(map.moss), &player);
+                        }
+                        else if(keyD.bind('D')){
+                            map.moveRight(&(map.moss), &player);
+                        }
+                        else if(keyS.bind('S')){
+                            map.moveDown(&(map.moss), &player);
+                        }
+                        if(moveUp.button("^", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                            if(!moveUp.click[0] && moveUp.click[1]){
+                                map.moveUp(&(map.moss), &player);
+                            }
+                        }
+                        else if(moveLeft.button("<", 0xB4C4AE, 70, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                            if(!moveLeft.click[0] && moveLeft.click[1]){
+                                map.moveLeft(&(map.moss), &player);
+                            }
+                        }
+                        else if(moveRight.button(">", 0xB4C4AE, 130, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                            if(!moveRight.click[0] && moveRight.click[1]){
+                                map.moveRight(&(map.moss), &player);
+                            }
+                        }
+                        else if(moveDown.button("v", 0xB4C4AE, 100, 120, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                            if(!moveDown.click[0] && moveDown.click[1]){
+                                map.moveDown(&(map.moss), &player);
+                            }
+                        }
+                        break;
+
+                    case 1:
+                        text.drawBorder(foggyValley[0], 10, 10, 310, 230);
+                        text.drawBox(foggyValley[1], 10, 10, 310, 230);
+                        if(text.button("Back", 0xB4C4AE, 150, 170, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                            menuState = 0;
+                        }
                 }
-                if(keyW.bind('W')){
-                    map.moveUp(&(map.moss), &player);
-                }
-                else if(keyA.bind('A')){
-                    map.moveLeft(&(map.moss), &player);
-                }
-                else if(keyD.bind('D')){
-                    map.moveRight(&(map.moss), &player);
-                }
-                else if(keyS.bind('S')){
-                    map.moveDown(&(map.moss), &player);
-                }
-                if(moveUp.button("^", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
-                    if(!moveUp.click[0] && moveUp.click[1]){
-                        map.moveUp(&(map.moss), &player);
-                    }
-                }
-                if(moveLeft.button("<", 0xB4C4AE, 70, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
-                    if(!moveLeft.click[0] && moveLeft.click[1]){
-                        map.moveLeft(&(map.moss), &player);
-                    }
-                }
-                if(moveRight.button(">", 0xB4C4AE, 130, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
-                    if(!moveRight.click[0] && moveRight.click[1]){
-                        map.moveRight(&(map.moss), &player);
-                    }
-                }
-                if(moveDown.button("v", 0xB4C4AE, 100, 120, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
-                    if(!moveDown.click[0] && moveDown.click[1]){
-                        map.moveDown(&(map.moss), &player);
-                    }
-                }
+                
                 break;
             
         }
