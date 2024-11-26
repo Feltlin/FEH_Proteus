@@ -97,7 +97,7 @@ class Map{
                         for(int i = 0; i < height; ++i){
                             newRow.clear();
                             for(int j = 0; j < width; ++j){
-                                newRow.push_back(10*(stb_perlin_noise3(factor*j*0.01, factor*i*0.01, 0, 0, 0, 0) + 1)/2.0);
+                                newRow.insert(newRow.begin(), 10*(stb_perlin_noise3((factor * 20 - j)*0.05, (factor * 15 - i)*0.05, 0, 0, 0, 0) + 1)/2.0);
                             }
                             map->insert(map->begin(), newRow);
                         }

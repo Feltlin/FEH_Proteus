@@ -3,6 +3,7 @@
 
 #include "simulator_libraries/FEHLCD.h"
 #include "simulator_libraries/FEHUtility.h"
+#include "simulator_libraries/FEHImages.h"
 
 #include <vector>
 #include <string>
@@ -12,6 +13,7 @@ class Text{
         int width = 5;
         int height = 7;
         bool click[2] = {false, false};
+        FEHImage Image;
 
         bool button(std::string text, int textColor, int x, int y, int borderWidth = 1, int borderColor = 0xffffff, int delay = 0, int clickedTextColor = 0, int clickedBorderColor = 0xffffff){
             
@@ -33,6 +35,30 @@ class Text{
             LCD.SetFontColor(NULL);
             LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
             display(text, textColor, x, y);
+            drawBorder(borderColor, x0, y0, x1, y1);
+            click[0] = click[1];
+            click[1] = false;
+            return false;
+        }
+        
+        bool imageButton(char path[], int x, int y, int borderWidth = 1, int borderColor = 0xffffff){
+            
+            int tx, ty;
+            int x0 = x - borderWidth, y0 = y - borderWidth;
+            int x1 = x + borderWidth, y1 = y + borderWidth;
+
+            if(LCD.Touch(&tx, &ty, false)){
+                if(tx >= x0 && tx <= x1 && ty >= y0 && ty <= y1){
+                    drawBox(borderColor, x0, y0, x1, y1);
+                    drawBorder(borderColor, x0, y0, x1, y1);
+                    click[0] = click[1];
+                    click[1] = true;
+                    return true;
+                }
+            }
+            Image.Open(path);
+            Image.Draw(x, y);
+            Image.Close();
             drawBorder(borderColor, x0, y0, x1, y1);
             click[0] = click[1];
             click[1] = false;
