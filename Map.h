@@ -11,6 +11,8 @@
 
 #define STB_PERLIN_IMPLEMENTATION
 #include "stb_perlin.h"
+#define STB_PERLIN_IMPLEMENTATION
+#include "stb_perlin.h"
 
 #include "Player.h"
 
