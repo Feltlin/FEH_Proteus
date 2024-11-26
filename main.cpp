@@ -169,11 +169,22 @@ int main()
                         break;
 
                     case 1:
+                        player.display();
                         text.drawBorder(foggyValley[0], 10, 10, 310, 230);
                         text.drawBox(foggyValley[1], 10, 10, 310, 230);
                         if(text.button("Back", 0xB4C4AE, 150, 170, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
                             menuState = 0;
                         }
+                        
+                        if(text.button(" ", 0xB4C4AE, 20, 20, 3, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                            if(!text.click[0] && text.click[1]){
+                                player.role = 'W';
+                                menuState = 0;
+                            }
+                        }
+                        Image.Open("./Image/Lava.png");
+                        Image.Draw(20, 20);
+                        Image.Close();
                 }
                 
                 break;

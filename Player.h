@@ -8,6 +8,7 @@ class Player{
     public:
         FEHImage Image;
         int x, y;
+        char role = 'K';
         char direction = 'R';
 
         Player(int x, int y){
@@ -16,13 +17,31 @@ class Player{
         }
 
         void display(){
-            switch(direction){
-                case 'L':
-                    Image.Open("./Image/Knight_L.png");
+            switch(role){
+                case 'K':
+                    switch(direction){
+                        case 'L':
+                            Image.Open("./Image/Knight_L.png");
+                            break;
+                        
+                        case 'R':
+                            Image.Open("./Image/Knight_R.png");
+                            break;
+
+                    }
                     break;
-                
-                case 'R':
-                    Image.Open("./Image/Knight_R.png");
+
+                case 'W':
+                    switch(direction){
+                        case 'L':
+                            Image.Open("./Image/Wizard.png");
+                            break;
+                        
+                        case 'R':
+                            Image.Open("./Image/Wizard.png");
+                            break;
+                    }
+                    break;
             }
             Image.Draw(x*16, y*16);
             Image.Close();
