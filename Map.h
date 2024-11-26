@@ -9,14 +9,14 @@
 #include <string>
 #include <random>
 
-#include "PerlinNoise.hpp"
+#define STB_PERLIN_IMPLEMENTATION
+#include "stb_perlin.h"
 
 #include "Player.h"
 
 class Map{
     public:
         FEHImage Image;
-        siv::PerlinNoise perlin;
         int height = 15, width = 20;
         int startRow = 0;
         int factor = 1;
@@ -97,7 +97,7 @@ class Map{
                         for(int i = 0; i < height; ++i){
                             newRow.clear();
                             for(int j = 0; j < width; ++j){
-                                newRow.push_back(10*perlin.octave2D_01(factor*j, factor*i, 4));
+                                newRow.push_back(10*(stb_perlin_noise3(factor*j*0.01, factor*i*0.01, 0, 0, 0, 0) + 1)/2.0);
                             }
                             map->insert(map->begin(), newRow);
                         }
