@@ -14,6 +14,7 @@ class Text{
         int height = 7;
         bool click[2] = {false, false};
         FEHImage Image;
+        int imageWidth = 16;
 
         bool button(std::string text, int textColor, int x, int y, int borderWidth = 1, int borderColor = 0xffffff, int delay = 0, int clickedTextColor = 0, int clickedBorderColor = 0xffffff){
             
@@ -45,7 +46,7 @@ class Text{
             
             int tx, ty;
             int x0 = x - borderWidth, y0 = y - borderWidth;
-            int x1 = x + borderWidth, y1 = y + borderWidth;
+            int x1 = x + borderWidth + imageWidth, y1 = y + borderWidth + imageWidth;
 
             if(LCD.Touch(&tx, &ty, false)){
                 if(tx >= x0 && tx <= x1 && ty >= y0 && ty <= y1){
