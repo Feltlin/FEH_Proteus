@@ -176,15 +176,12 @@ int main()
                             menuState = 0;
                         }
                         
-                        if(text.button(" ", 0xB4C4AE, 20, 20, 3, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                        if(text.imageButton("./Image/Lava.png", 20, 20, 0)){
                             if(!text.click[0] && text.click[1]){
                                 player.role = 'W';
                                 menuState = 0;
                             }
                         }
-                        Image.Open("./Image/Lava.png");
-                        Image.Draw(20, 20);
-                        Image.Close();
                 }
                 
                 break;
