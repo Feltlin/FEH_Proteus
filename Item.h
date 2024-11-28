@@ -8,7 +8,7 @@ class Item{
     public:
         FEHImage Image;
         int x, y;
-        char kind = 'M';
+        char kind = 'W';
 
         Item(int x, int y){
             this->x = x;

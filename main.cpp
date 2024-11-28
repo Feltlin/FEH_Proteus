@@ -24,6 +24,7 @@ int main(){
     Key keyW, keyA, keyD, keyS;
     Map map;
     Player player(10, 14);
+    Item item(10, 16);
     FEHImage Image;
     int state = 0, menuState = 0;
     float tx, ty;
@@ -138,6 +139,7 @@ int main(){
             case 10:
                 map.display(&(map.moss), 0, 0);
                 player.display();
+                item.display();
                 switch(menuState){
                     case 0:
                         if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
