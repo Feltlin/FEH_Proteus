@@ -11,13 +11,13 @@
 #include "Key.h"
 #include "Item.h"
 
+//Function prototype.
 void fish(FEHImage Image, int* x);
 void draw(std::vector<std::vector<int>> *image, int x, int y);
 
-int click[] = {false, false};
+int main(){   
 
-int main()
-{
+    //Predefined object and variable.
     //Screen max: w=320=16*20, h=240=16*15
     Text text;
     Text moveUp, moveLeft, moveRight, moveDown;
@@ -41,11 +41,22 @@ int main()
     int amplitude = 4;
     int period = 2;
 
-    while (1) {
+    //Game loop.
+    while (1){
+
+        //Clear the screen after each new frame update.
         LCD.Clear();
+
+        //State machine for deciding the window showing on the screen.
         switch(state){
+
+            //Start screen.
             case 0:
+
+                //Draw fish mvoing on the screen.
                 fish(Image, &x);
+
+                //Multicolor text with oscillatory motion.
                 text.display("W", foggyValley[4], 136, 50 + amplitude * sin(t / period));
                 text.display("el", foggyValley[3], 142, 50 + amplitude * sin(t / period));
                 text.display("c", foggyValley[2], 154, 50 + amplitude * sin(t / period));
