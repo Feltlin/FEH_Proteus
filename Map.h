@@ -19,13 +19,22 @@ class Map{
         FEHImage Image;
         int height = 15, width = 20;
         int startRow = 0;
-        int factor = 1;
+        int chunky = 0;
         //width=20, height=15
         std::vector<std::vector<int>> moss;
+        std::vector<int> newRow;
 
         void display(std::vector<std::vector<int>> *map, int x, int y){
-            if(moss.size() == 0){
-                moss.resize(height, std::vector<int>(width, 1));
+            if(map->size() == 0){
+                ++chunky;
+                for(int i = height; i >= 0; --i){
+                    newRow.clear();
+                    for(int j = 0; j < width; ++j){
+                        newRow.push_back(10*(stb_perlin_noise3((j)*0.05, (chunky * 15 - i)*0.05, 0, 0, 0, 0) + 1)/2);
+                    }
+                    map->insert(map->begin(), newRow);
+                }
+
             }
             for(int row = startRow; row < startRow + height; ++row){
                 for(int column = 0; column < std::min(int((*map)[row].size()), width); ++column){
@@ -84,7 +93,6 @@ class Map{
         }
 
         void moveUp(std::vector<std::vector<int>> *map, Player *player){
-            std::vector<int> newRow = {0, 1, 2, 1, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1};
             switch((*map)[startRow + player->y - 1][player->x]){
                 case 2:
                     break;
@@ -93,21 +101,18 @@ class Map{
                         --player->y;
                     }
                     else if(startRow == 0){
-                        //Use a random generator to generate the new row of map.
-                        for(int i = 0; i < height; ++i){
+                        //Use Perlin noise to generate the new chunk of map.
+                        ++chunky;
+                        for(int i = height; i >= 0; --i){
                             newRow.clear();
                             for(int j = 0; j < width; ++j){
-                                newRow.insert(newRow.begin(), 10*(stb_perlin_noise3((factor * 20 - j)*0.05, (factor * 15 - i)*0.05, 0, 0, 0, 0) + 1)/2.0);
+                                newRow.push_back(10*(stb_perlin_noise3((j)*0.05, (chunky * 15 - i)*0.05, 0, 0, 0, 0) + 1)/2);
                             }
                             map->insert(map->begin(), newRow);
                         }
 
-                        // for(int i = 0; i < height; ++i){
-                        //     map->insert(map->begin(), newRow);
-                        // }
                         startRow += height;
                         --startRow;
-                        ++factor;
                     }
                     else{
                         --startRow;
