@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Key.h"
+#include "Item.h"
 
 void fish(FEHImage Image, int* x);
 void draw(std::vector<std::vector<int>> *image, int x, int y);
@@ -176,14 +177,43 @@ int main()
                             menuState = 0;
                         }
                         
-                        if(text.imageButton("./Image/Lava.png", 20, 20, 0)){
+                        if(text.imageButton("./Image/WoodenSword.png", 20, 20, 0)){
+                            if(!text.click[0] && text.click[1]){
+                                player.role = 'W';
+                                menuState = 0;
+                            }
+                        }
+                        if(text.imageButton("./Image/StoneSword.png", 40, 20, 0)){
+                            if(!text.click[0] && text.click[1]){
+                                player.role = 'W';
+                                menuState = 0;
+                            }
+                        }
+                        if(text.imageButton("./Image/GoldSword.png", 60, 20, 0)){
+                            if(!text.click[0] && text.click[1]){
+                                player.role = 'W';
+                                menuState = 0;
+                            }
+                        }
+                        if(text.imageButton("./Image/EmeraldSword.png", 80, 20, 0)){
+                            if(!text.click[0] && text.click[1]){
+                                player.role = 'W';
+                                menuState = 0;
+                            }
+                        }
+                        if(text.imageButton("./Image/RubySword.png", 100, 20, 0)){
+                            if(!text.click[0] && text.click[1]){
+                                player.role = 'W';
+                                menuState = 0;
+                            }
+                        }
+                        if(text.imageButton("./Image/DiamondSword.png", 120, 20, 0)){
                             if(!text.click[0] && text.click[1]){
                                 player.role = 'W';
                                 menuState = 0;
                             }
                         }
                 }
-                
                 break;
             
         }
