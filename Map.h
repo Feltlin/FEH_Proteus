@@ -23,6 +23,7 @@ class Map{
         //width=20, height=15
         std::vector<std::vector<int>> moss;
         std::vector<int> newRow;
+        std::vector<int> collisionTile = {7, 8};
 
         void display(std::vector<std::vector<int>> *map, int x, int y){
             if(map->size() == 0){
@@ -93,41 +94,35 @@ class Map{
         }
 
         void moveUp(std::vector<std::vector<int>> *map, Player *player){
-            switch((*map)[startRow + player->y - 1][player->x]){
-                case 2:
-                    break;
-                default:
-                    if(player->y > height / 2){
+            if(!collide((*map)[startRow + player->y - 1][player->x])){
+                if(player->y > height / 2){
                         --player->y;
-                    }
-                    else if(startRow == 0){
-                        //Use Perlin noise to generate the new chunk of map.
-                        ++chunky;
-                        for(int i = height; i >= 0; --i){
-                            newRow.clear();
-                            for(int j = 0; j < width; ++j){
-                                newRow.push_back(10*(stb_perlin_noise3((j)*0.05, (chunky * 15 - i)*0.05, 0, 0, 0, 0) + 1)/2);
-                            }
-                            map->insert(map->begin(), newRow);
+                }
+                else if(startRow == 0){
+                    //Use Perlin noise to generate the new chunk of map.
+                    ++chunky;
+                    for(int i = height; i >= 0; --i){
+                        newRow.clear();
+                        for(int j = 0; j < width; ++j){
+                            newRow.push_back(10*(stb_perlin_noise3((j)*0.05, (chunky * 15 - i)*0.05, 0, 0, 0, 0) + 1)/2);
                         }
+                        map->insert(map->begin(), newRow);
+                    }
 
-                        startRow += height;
-                        --startRow;
-                    }
-                    else{
-                        --startRow;
-                    }
+                    startRow += height;
+                    --startRow;
+                }
+                else{
+                    --startRow;
+                }
             }
             
         }
 
         void moveLeft(std::vector<std::vector<int>> *map, Player *player){
             if(player->x > 0){
-                switch((*map)[startRow + player->y][player->x - 1]){
-                    case 2:
-                        break;
-                    default:
-                        --player->x;
+                if(!collide((*map)[startRow + player->y][player->x - 1])){
+                    --player->x;
                 }
             }
             player->direction = 'L';
@@ -136,11 +131,8 @@ class Map{
 
         void moveRight(std::vector<std::vector<int>> *map, Player *player){
             if(player->x < 19){
-                switch((*map)[startRow + player->y][player->x + 1]){
-                    case 2:
-                        break;
-                    default:
-                        ++player->x;
+                if(!collide((*map)[startRow + player->y][player->x + 1])){
+                    ++player->x;
                 }
             }
             player->direction = 'R';
@@ -149,11 +141,19 @@ class Map{
 
         void moveDown(std::vector<std::vector<int>> *map, Player *player){
             if(player->y < height - 1){
-                switch((*map)[startRow + player->y + 1][player->x]){
-                    case 2:
-                        break;
-                    default:
-                        ++player->y;
+                if(!collide((*map)[startRow + player->y + 1][player->x])){
+                    ++player->y;
+                }
+            }
+        }
+
+        bool collide(int tile){
+            for(int i = 0; i < collisionTile.size(); ++i){
+                if(tile == collisionTile[i]){
+                    return true;
+                }
+                else{
+                    return false;
                 }
             }
         }
