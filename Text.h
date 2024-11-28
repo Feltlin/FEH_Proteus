@@ -8,33 +8,60 @@
 #include <vector>
 #include <string>
 
+//Text Class to display text and button.
 class Text{
     public:
+
+        //Dimensions of a single letter in the font.
         int width = 5;
         int height = 7;
+
+        //Click detection. 0: Previous frame click, 1: Current fram click.
         bool click[2] = {false, false};
+
+        //Image class to display image button.
         FEHImage Image;
+
+        //Width and height of the image.
         int imageWidth = 16;
 
-        bool button(std::string text, int textColor, int x, int y, int borderWidth = 1, int borderColor = 0xffffff, int delay = 0, int clickedTextColor = 0, int clickedBorderColor = 0xffffff){
+        //Display text button. Return if the button is been clicked. After x and y all other parameter is default.
+        bool button(std::string text, int textColor, int x, int y, int borderWidth = 1, int borderColor = 0xffffff, int boxColor = -1, int clickedTextColor = 0, int clickedBoxColor = 0xffffff){
             
+            //Store where the touch is detected.
             int tx, ty;
+
+            //Calculate the initial and final position of the border.
             int x0 = x - borderWidth, y0 = y - borderWidth;
             int x1 = x + (width + 1) * text.length() + borderWidth, y1 = y + (height + 1) + borderWidth;
             
             if(LCD.Touch(&tx, &ty, false)){
+
+                //Draw the clicked version if it is clicked inside the button area.
                 if(tx >= x0 && tx <= x1 && ty >= y0 && ty <= y1){
-                    LCD.SetFontColor(clickedBorderColor);
-                    LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
+
+                    //Draw the highlight box.
+                    LCD.SetFontColor(clickedBoxColor);
+                    LCD.FillRectangle(x0 + 1, y0 + 1,  x1 - x0 - 1, y1 - y0 - 1);
+
+                    //Draw the border.
                     drawBorder(borderColor, x0, y0, x1, y1);
+
+                    //Display the highlight text.
                     display(text, clickedTextColor, x, y);
+
+                    //Change the click state.
                     click[0] = click[1];
                     click[1] = true;
                     return true;
                 }
             }
-            LCD.SetFontColor(NULL);
-            LCD.FillRectangle(x0 + 1, y0 + 1,  6 * text.length() + 2 * borderWidth - 1, 8 + 2 * borderWidth - 1);
+
+            //Draw the regular version if it is not clicked or clicked outside the button area.
+            if(boxColor != -1){
+                LCD.SetFontColor(boxColor);
+                LCD.FillRectangle(x0, y0,  x1 - x0 + 1, y1 - y0 + 1);
+            }
             display(text, textColor, x, y);
             drawBorder(borderColor, x0, y0, x1, y1);
             click[0] = click[1];
@@ -42,6 +69,7 @@ class Text{
             return false;
         }
         
+        //Display image button.
         bool imageButton(char path[], int x, int y, int borderWidth = 1, int borderColor = 0xffffff){
             
             int tx, ty;
@@ -66,6 +94,7 @@ class Text{
             return false;
         }
 
+        //Draw the border of the button.
         void drawBorder(int color, int xi, int yi, int xf, int yf){
             LCD.SetFontColor(color);
             LCD.DrawHorizontalLine(yi - 1, xi, xf + 1);
@@ -74,13 +103,19 @@ class Text{
             LCD.DrawVerticalLine(xf + 1, yi, yf + 1);
         }
 
+        //Draw a rectangular box.
         void drawBox(int color, int xi, int yi, int xf, int yf){
             LCD.SetFontColor(color);
             LCD.FillRectangle(xi, yi, xf - xi + 1, yf - yi + 1);
         }
 
+        //Display the text.
         void display(std::string text, int color, int x, int y){
+
+            //Iterate through the string.
             for(int index = 0; index < text.length(); ++index){
+
+                //Use switch case to match each letter.
                 switch(text[index]){
                     case 'A':
                         displayLetter(&A, color, x + index * (width + 1), y);
@@ -363,6 +398,7 @@ class Text{
             }
         }
 
+        //Display a single letter.
         void displayLetter(std::vector<std::vector<int>> *letter, int color, int x, int y){
             for(int row = 0; row < letter->size(); ++row){
                 for(int column = 0; column < (*letter)[row].size(); ++column){
@@ -374,6 +410,8 @@ class Text{
             }
         }
 
+
+        //2D vector for store the shape of the letters.
         std::vector<std::vector<int>> A = 
         {
             {0, 1, 1, 1},

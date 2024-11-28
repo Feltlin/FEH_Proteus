@@ -65,33 +65,50 @@ int main(){
                 text.display("me!", foggyValley[0], 166, 50 + amplitude * sin(t / period));
                 ++t;
 
+                //Touch anywhere to switch to the next screen.
                 if(LCD.Touch(&tx, &ty, false)){
                     state = 1;
                 }
                 break;
 
+            //Main screen.
             case 1:
-                if(text.button("Touch me", lava[0], 136, 100, 2, lava[0], 100, 0xffffff - lava[0])){
+
+                //Fun button, may get removed or change place in the future.
+                if(text.button("Touch me", lava[0], 136, 100, 2, lava[0], -1, 0xffffff - lava[0])){
                     text.display("YOU WILL GET TOUCHED.", 0xff0000, 100, 58);
                 }
-                if(text.button("Start",  lava[1], 136, 120, 2, lava[1], 100, 0xffffff - lava[1])){
+
+                //Start the main game.
+                if(text.button("Start",  lava[1], 136, 120, 2, lava[1], -1, 0xffffff - lava[1])){
                     state = 10;
                 }
-                if(text.button("Credit", lava[2], 136, 140, 2, lava[2], 100, 0xffffff - lava[2])){
+
+                //Switch to credit screen.
+                if(text.button("Credit", lava[2], 136, 140, 2, lava[2], -1, 0xffffff - lava[2])){
                     state = 2;
                 }
-                if(text.button("Instruction", lava[3], 136, 160, 2, lava[3], 100, 0xffffff - lava[3])){
+
+                //Switch to instruction screen.
+                if(text.button("Instruction", lava[3], 136, 160, 2, lava[3], -1, 0xffffff - lava[3])){
                     state = 3;
                 }
-                if(text.button("Stats", lava[4], 136, 180, 2, lava[4], 100, 0xffffff - lava[4])){
+
+                //Switch to stats screen.
+                if(text.button("Stats", lava[4], 136, 180, 2, lava[4], -1, 0xffffff - lava[4])){
                     state = 4;
                 }
+
+                //Keyboard 'A' press detection.
                 if (tigrKeyHeld(LCD.screen, 'A')) {
                     text.display("A pressed!", foggyValley[0], 166, 50);
                 }
                 break;
 
+            //Credit screen.
             case 2:
+
+                //Display the credit.
                 text.display("Creator:", foggyValley[4], 100, 50);
                 text.display("Junhao Liu", foggyValley[3], 100, 58);
                 text.display("Anthony Ezzone", foggyValley[2], 100, 66);
@@ -102,12 +119,17 @@ int main(){
                 text.display("0123456789", 0x77B28C, 100, 114);
                 text.display("+-*/=%\"\'#$@&_(){}<>[]", 0xC2C5BB, 100, 122);
                 text.display(",.;:?!^~`", 0xC2C5BB, 100, 130);
-                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+
+                //Back to the main screen.
+                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                     state = 1;
                 }
                 break;
 
+            //Instruction screen.
             case 3:
+
+                //Display the game background.
                 text.display("Instruction", 0x586994, 100, 50);
                 text.display("In this game you are a hero fighting his way through ", foggyValley[0], 5, 60);
                 text.display("the land of malpatria, which has been taken over by ", foggyValley[1], 5, 68);
@@ -124,30 +146,51 @@ int main(){
                 text.display("The score will be totaled up and put on the ", foggyValley[2], 5, 156);
                 text.display("leaderboard in the statistics section. Have fun!", foggyValley[3], 5, 164);
                 
-                if(text.button("Back", 0xB4C4AE, 100, 180, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                //Back to the main screen.
+                if(text.button("Back", 0xB4C4AE, 100, 180, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                     state = 1;
                 }
                 break;
 
+            //Stats screen.
             case 4:
                 text.display("Stats", 0x586994, 100, 50);
-                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+
+                //Back to the main screen.
+                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                     state = 1;
                 }
                 break;
 
+            //Main game.
             case 10:
+
+                //Display the map.
                 map.display(&(map.moss), 0, 0);
+
+                //Display the player.
                 player.display();
+
+                //Display the item.
                 item.display();
+
+                //Open in-game menu.
                 switch(menuState){
+
+                    //When menu is not open.
                     case 0:
-                        if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+
+                        //Back to the main screen..
+                        if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             state = 1;
                         }
-                        if(text.button("Menu", 0xB4C4AE, 100, 170, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+
+                        //Open the menu.
+                        if(text.button("Menu", 0xB4C4AE, 100, 170, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             menuState = 1;
                         }
+
+                        //Key press and button press detection. Future may let the player choose to use only button or only key press or both.
                         if(keyW.bind('W')){
                             map.moveUp(&(map.moss), &player);
                         }
@@ -160,33 +203,34 @@ int main(){
                         else if(keyS.bind('S')){
                             map.moveDown(&(map.moss), &player);
                         }
-                        if(moveUp.button("^", 0xB4C4AE, 100, 100, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                        if(moveUp.button("^", 0xB4C4AE, 100, 100, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             if(!moveUp.click[0] && moveUp.click[1]){
                                 map.moveUp(&(map.moss), &player);
                             }
                         }
-                        else if(moveLeft.button("<", 0xB4C4AE, 70, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                        if(moveLeft.button("<", 0xB4C4AE, 70, 110, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             if(!moveLeft.click[0] && moveLeft.click[1]){
                                 map.moveLeft(&(map.moss), &player);
                             }
                         }
-                        else if(moveRight.button(">", 0xB4C4AE, 130, 110, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                        if(moveRight.button(">", 0xB4C4AE, 130, 110, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             if(!moveRight.click[0] && moveRight.click[1]){
                                 map.moveRight(&(map.moss), &player);
                             }
                         }
-                        else if(moveDown.button("v", 0xB4C4AE, 100, 120, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                        if(moveDown.button("v", 0xB4C4AE, 100, 120, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             if(!moveDown.click[0] && moveDown.click[1]){
                                 map.moveDown(&(map.moss), &player);
                             }
                         }
                         break;
 
+                    //When the in-game menu is open.
                     case 1:
                         player.display();
                         text.drawBorder(foggyValley[0], 10, 10, 310, 230);
                         text.drawBox(foggyValley[1], 10, 10, 310, 230);
-                        if(text.button("Back", 0xB4C4AE, 150, 170, 2, 0xffffff, 100, 0xffffff - 0xB4C4AE)){
+                        if(text.button("Back", 0xB4C4AE, 150, 170, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             menuState = 0;
                         }
                         
@@ -230,12 +274,15 @@ int main(){
                 break;
             
         }
+
+        //Update the frame.
         LCD.Update();
     }
 
     return 0;
 }
 
+//Draw the fish on the start screen.
 void fish(FEHImage Image, int* x){
     Image.Open("./Image/cod.png");
     for(int i = 0; i < 20; ++i){
@@ -248,6 +295,9 @@ void fish(FEHImage Image, int* x){
     Image.Close();
     (*x > 0) ? --*x : *x = 320;
 }
+
+//Not used.
+//Draw the 2D vector of Hex RGB image on the screen.
 //vector of pixel vectors <color, x, y>
 void draw(std::vector<std::vector<int>> *image, int x, int y){
     for(int row = 0; row < image->size(); ++row){
