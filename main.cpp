@@ -20,7 +20,7 @@ int main(){
     //Predefined object and variable.
     //Screen max: w=320=16*20, h=240=16*15
     Text text;
-    Text moveUp, moveLeft, moveRight, moveDown;
+    Text newMap, moveUp, moveLeft, moveRight, moveDown;
     Key keyW, keyA, keyD, keyS;
     Map map;
     Player player(10, 14);
@@ -82,6 +82,15 @@ int main(){
                 //Start the main game.
                 if(text.button("Start",  lava[1], 136, 120, 2, lava[1], -1, 0xffffff - lava[1])){
                     state = 10;
+                }
+
+                //Generate a new map.
+                if(newMap.button("New Map",  lava[1], 175, 120, 2, lava[1], -1, 0xffffff - lava[1])){
+                    if(!newMap.click[0] && newMap.click[1]){
+                        map.reset();
+                        player.x = 10;
+                        player.y = 14;
+                    }
                 }
 
                 //Switch to credit screen.
@@ -166,7 +175,7 @@ int main(){
             case 10:
 
                 //Display the map.
-                map.display(&(map.moss), 0, 0);
+                map.display(0, 0);
 
                 //Display the player.
                 player.display();
@@ -192,35 +201,35 @@ int main(){
 
                         //Key press and button press detection. Future may let the player choose to use only button or only key press or both.
                         if(keyW.bind('W')){
-                            map.moveUp(&(map.moss), &player);
+                            map.moveUp( &player);
                         }
                         else if(keyA.bind('A')){
-                            map.moveLeft(&(map.moss), &player);
+                            map.moveLeft(&player);
                         }
                         else if(keyD.bind('D')){
-                            map.moveRight(&(map.moss), &player);
+                            map.moveRight(&player);
                         }
                         else if(keyS.bind('S')){
-                            map.moveDown(&(map.moss), &player);
+                            map.moveDown(&player);
                         }
                         if(moveUp.button("^", 0xB4C4AE, 100, 100, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             if(!moveUp.click[0] && moveUp.click[1]){
-                                map.moveUp(&(map.moss), &player);
+                                map.moveUp(&player);
                             }
                         }
                         if(moveLeft.button("<", 0xB4C4AE, 70, 110, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             if(!moveLeft.click[0] && moveLeft.click[1]){
-                                map.moveLeft(&(map.moss), &player);
+                                map.moveLeft(&player);
                             }
                         }
                         if(moveRight.button(">", 0xB4C4AE, 130, 110, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             if(!moveRight.click[0] && moveRight.click[1]){
-                                map.moveRight(&(map.moss), &player);
+                                map.moveRight(&player);
                             }
                         }
                         if(moveDown.button("v", 0xB4C4AE, 100, 120, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             if(!moveDown.click[0] && moveDown.click[1]){
-                                map.moveDown(&(map.moss), &player);
+                                map.moveDown(&player);
                             }
                         }
                         break;
