@@ -164,6 +164,7 @@ int main(){
             //Stats screen.
             case 4:
                 text.display("Stats", 0x586994, 100, 50);
+                text.display("Max Step: " + std::to_string(map.maxstep), foggyValley[1], 100, 60);
 
                 //Back to the main screen.
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
@@ -182,6 +183,9 @@ int main(){
 
                 //Display the item.
                 item.display();
+
+                //Display the steps that player have traveled.
+                text.button(std::to_string(map.step), lava[3], 150, 16, 1, 0xffffff, lava[0]);
 
                 //Open in-game menu.
                 switch(menuState){

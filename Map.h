@@ -31,6 +31,8 @@ class Map{
         int height = 15, width = 20;
         int startRow = 0;
         int chunky = 0;
+        int step = 0;
+        int maxstep = 0;
         int randnum = rand();
         int tempnum = rand();
         //width=20, height=15
@@ -60,6 +62,8 @@ class Map{
         void reset(){
             startRow = 0;
             chunky = 0;
+            maxstep = std::max(step, maxstep);
+            step = 0;
             randnum = rand();
             tempnum = rand();
             layer0.clear();
@@ -168,6 +172,7 @@ class Map{
 
         void moveUp(Player *player){
             if(!collide(moss[startRow + player->y - 1][player->x][0])){
+                ++step;
                 if(player->y > height / 2){
                         --player->y;
                 }
@@ -208,6 +213,7 @@ class Map{
         void moveDown(Player *player){
             if(player->y < height - 1){
                 if(!collide(moss[startRow + player->y + 1][player->x][0])){
+                    --step;
                     ++player->y;
                 }
             }
