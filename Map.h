@@ -36,20 +36,24 @@ class Map{
         //width=20, height=15
         std::vector<std::vector<std::array<float, 2>>> layer0;
         std::vector<std::vector<std::array<float, 2>>> moss;
+        std::vector<std::vector<std::array<float, 2>>> decoration;
         std::vector<std::array<float, 2>> newRow;
         std::vector<int> collisionTile = {7, 8};
-        std::map<int, std::vector<std::string>> idMap;
+        std::map<int, std::vector<std::string>> tileIDMap;
+        std::map<int, std::vector<std::string>> decorationIDMap;
 
         Map(){
-            idMap[-1] = {"Unknown", "./Image/PaleMoss.png"};
-            idMap[0] = {"Air", ""};
-            idMap[1] = {"Stone", "./Image/SnowStone.png", "./Image/CoolStone.png", "./Image/Stone.png", "./Image/WarmStone.png", "./Image/HotStone.png"};
-            idMap[2] = {"Grass", "./Image/ColdGrass.png", "./Image/CoolGrass.png", "./Image/Grass.png", "./Image/FloweryGrass.png", "./Image/Dirt.png"};
-            idMap[3] = {"Sand", "./Image/BlueSand.png", "./Image/GreenSand.png", "./Image/Sand.png", "./Image/Sand.png", "./Image/RedSand.png"};
-            idMap[7] = {"StoneBrick", "./Image/StoneBrick.png"};
-            idMap[8] = {"Water", "./Image/Water.png"};
-            idMap[9] = {"Lava", "./Image/Lava.png"};
-            idMap[10] = {"Shore", "./Image/Shore.png"};
+            tileIDMap[-1] = {"Unknown", "./Image/PaleMoss.png"};
+            tileIDMap[0] = {"Air", ""};
+            tileIDMap[1] = {"Stone", "./Image/SnowStone.png", "./Image/CoolStone.png", "./Image/Stone.png", "./Image/WarmStone.png", "./Image/HotStone.png"};
+            tileIDMap[2] = {"Grass", "./Image/ColdGrass.png", "./Image/CoolGrass.png", "./Image/Grass.png", "./Image/FloweryGrass.png", "./Image/Dirt.png"};
+            tileIDMap[3] = {"Sand", "./Image/BlueSand.png", "./Image/GreenSand.png", "./Image/Sand.png", "./Image/Sand.png", "./Image/RedSand.png"};
+            tileIDMap[7] = {"StoneBrick", "./Image/StoneBrick.png"};
+            tileIDMap[8] = {"Water", "./Image/Water.png"};
+            tileIDMap[9] = {"Lava", "./Image/Lava.png"};
+            tileIDMap[10] = {"Shore", "./Image/Shore.png"};
+
+            decorationIDMap[0] = {"./Image/Apple.png", "./Image/Watermelon.png"};
         }
 
         //Start a new map.
@@ -101,6 +105,32 @@ class Map{
                 layer1->insert(layer1->begin(), newRow);
             }
             //Generate decoration based on tile.
+            for(int i = height; i >= 0; --i){
+                newRow.clear();
+                for(int j = 0; j < width; ++j){
+                    //Generate on grass tile.
+                    if((*layer1)[i][j][0] == 2){
+                        //1% chance generate an item.
+                        if(rand()%100 == 1){
+                            //10% chance generate watermelon.
+                            if(rand()%10 == 1){
+                                newRow.push_back(std::array<float, 2>{0, 1});
+                            }
+                            //90% chance generate apple.
+                            else{
+                                newRow.push_back(std::array<float, 2>{0, 0});
+                            }
+                        }
+                        else{
+                            newRow.push_back(std::array<float, 2>{-1, 0});
+                        }
+                    }
+                    else{
+                        newRow.push_back(std::array<float, 2>{-1, 0});
+                    }
+                }
+                decoration.insert(decoration.begin(), newRow);
+            }
             //Generate mob based on tile.
         }
 
@@ -110,16 +140,25 @@ class Map{
             }
             for(int row = startRow; row < startRow + height; ++row){
                 for(int column = 0; column < std::min(int(moss[row].size()), width); ++column){
+                    //Draw regular tile.
                     if(moss[row][column][0] > 0){
-                        Image.Open(idMap[moss[row][column][0]][moss[row][column][1]].data());
+                        Image.Open(tileIDMap[moss[row][column][0]][moss[row][column][1]].data());
                         Image.Draw(x + column * 16, y + (row - startRow) * 16);
                         Image.Close();
                     }
+                    //Skip air tile.
                     else if(moss[row][column][0] == 0){
                         continue;
                     }
+                    //Draw unknown tile.
                     else{
-                        Image.Open(idMap[-1][1].data());
+                        Image.Open(tileIDMap[-1][1].data());
+                        Image.Draw(x + column * 16, y + (row - startRow) * 16);
+                        Image.Close();
+                    }
+                    //Draw decoration.
+                    if(decoration[row][column][0] == 0){
+                        Image.Open(decorationIDMap[decoration[row][column][0]][decoration[row][column][1]].data());
                         Image.Draw(x + column * 16, y + (row - startRow) * 16);
                         Image.Close();
                     }
