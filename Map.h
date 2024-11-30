@@ -39,7 +39,7 @@ class Map{
         std::vector<std::vector<std::array<float, 2>>> layer0;
         std::vector<std::vector<std::array<float, 2>>> moss;
         std::vector<std::vector<std::array<float, 2>>> decoration;
-        std::vector<std::vector<int>> mob;
+        std::vector<std::vector<std::array<int, 2>>> mob;
         std::vector<int> collisionTile = {7, 8};
         std::map<int, std::vector<std::string>> tileIDMap;
         std::map<int, std::vector<std::string>> decorationIDMap;
@@ -142,7 +142,7 @@ class Map{
                 decoration.insert(decoration.begin(), newRow);
             }
             //Generate mob based on tile.
-            std::vector<int> mobRow;
+            std::vector<std::array<int, 2>> mobRow;
             for(int i = height; i >= 0; --i){
                 mobRow.clear();
                 for(int j = 0; j < width; ++j){
@@ -150,24 +150,24 @@ class Map{
                     if((*layer1)[i][j][0] == 3){
                         //0.05% generate a snake.
                         if(rand()%10 == 1){
-                            mobRow.push_back(0);
+                            mobRow.push_back({0, 10});
                         }
                         else{
-                            mobRow.push_back(-1);
+                            mobRow.push_back({-1, 0});
                         }
                     }
                     //Generate on stone tile.
                     else if((*layer1)[i][j][0] == 1){
                         //0.01% generate a robot.
                         if(rand()%1000 == 1){
-                            mobRow.push_back(1);
+                            mobRow.push_back({1, 100});
                         }
                         else{
-                            mobRow.push_back(-1);
+                            mobRow.push_back({-1, 0});
                         }
                     }
                     else{
-                        mobRow.push_back(-1);
+                        mobRow.push_back({-1, 0});
                     }
                 }
                 mob.insert(mob.begin(), mobRow);
@@ -203,8 +203,8 @@ class Map{
                         Image.Close();
                     }
                     //Draw mob.
-                    if(mob[row][column] != -1){
-                        Image.Open(mobIDMap[mob[row][column]][0].data());
+                    if(mob[row][column][0] != -1){
+                        Image.Open(mobIDMap[mob[row][column][0]][0].data());
                         Image.Draw(x + column * 16, y + (row - startRow) * 16);
                         Image.Close();
                     }
@@ -228,8 +228,8 @@ class Map{
         }
 
         void moveUp(Player *player){
-            if(mob[startRow + player->y - 1][player->x] != -1){
-                mob[startRow + player->y - 1][player->x] = -1;
+            if(mob[startRow + player->y - 1][player->x][0] != -1){
+                mob[startRow + player->y - 1][player->x][0] = -1;
             }
             else if(!collide(moss[startRow + player->y - 1][player->x][0])){
                 ++step;
@@ -251,8 +251,8 @@ class Map{
         }
 
         void moveLeft(Player *player){
-            if(mob[startRow + player->y][player->x - 1] != -1){
-                mob[startRow + player->y][player->x - 1] = -1;
+            if(mob[startRow + player->y][player->x - 1][0] != -1){
+                mob[startRow + player->y][player->x - 1][0] = -1;
             }
             else if(player->x > 0){
                 if(!collide(moss[startRow + player->y][player->x - 1][0])){
@@ -264,8 +264,8 @@ class Map{
         }
 
         void moveRight(Player *player){
-            if(mob[startRow + player->y][player->x + 1] != -1){
-                mob[startRow + player->y][player->x + 1] = -1;
+            if(mob[startRow + player->y][player->x + 1][0] != -1){
+                mob[startRow + player->y][player->x + 1][0] = -1;
             }
             else if(player->x < 19){
                 if(!collide(moss[startRow + player->y][player->x + 1][0])){
@@ -277,8 +277,8 @@ class Map{
         }
 
         void moveDown(Player *player){
-            if(mob[startRow + player->y + 1][player->x] != -1){
-                mob[startRow + player->y + 1][player->x] = -1;
+            if(mob[startRow + player->y + 1][player->x][0] != -1){
+                mob[startRow + player->y + 1][player->x][0] = -1;
             }
             else if(player->y < height - 1){
                 if(!collide(moss[startRow + player->y + 1][player->x][0])){
