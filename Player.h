@@ -34,11 +34,11 @@ class Player{
                 case 'W':
                     switch(direction){
                         case 'L':
-                            Image.Open("./Image/Wizard.png");
+                            Image.Open("./Image/Wizard_L.png");
                             break;
                         
                         case 'R':
-                            Image.Open("./Image/Wizard.png");
+                            Image.Open("./Image/Wizard_R.png");
                             break;
                     }
                     break;

@@ -180,10 +180,8 @@ class Map{
                 if(tile == collisionTile[i]){
                     return true;
                 }
-                else{
-                    return false;
-                }
             }
+            return false;
         }
 
 };
