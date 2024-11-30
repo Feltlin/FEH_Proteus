@@ -39,10 +39,11 @@ class Map{
         std::vector<std::vector<std::array<float, 2>>> layer0;
         std::vector<std::vector<std::array<float, 2>>> moss;
         std::vector<std::vector<std::array<float, 2>>> decoration;
-        std::vector<std::array<float, 2>> newRow;
+        std::vector<std::vector<int>> mob;
         std::vector<int> collisionTile = {7, 8};
         std::map<int, std::vector<std::string>> tileIDMap;
         std::map<int, std::vector<std::string>> decorationIDMap;
+        std::map<int, std::vector<std::string>> mobIDMap;
 
         Map(){
             tileIDMap[-1] = {"Unknown", "./Image/PaleMoss.png"};
@@ -56,6 +57,10 @@ class Map{
             tileIDMap[10] = {"Shore", "./Image/Shore.png"};
 
             decorationIDMap[0] = {"./Image/Apple.png", "./Image/Watermelon.png"};
+
+            mobIDMap[0] = {"./Image/Snake.png"};
+            mobIDMap[1] = {"./Image/Robot.png"};
+            mobIDMap[2] = {"./Image/Cod.png"};
         }
 
         //Start a new map.
@@ -71,6 +76,7 @@ class Map{
         }
 
         void generate(std::vector<std::vector<std::array<float, 2>>> *layer0, std::vector<std::vector<std::array<float, 2>>> *layer1){
+            std::vector<std::array<float, 2>> newRow;
             //Generate water and stone.
             ++chunky;
             for(int i = height; i >= 0; --i){
@@ -114,7 +120,7 @@ class Map{
                 for(int j = 0; j < width; ++j){
                     //Generate on grass tile.
                     if((*layer1)[i][j][0] == 2){
-                        //1% chance generate an item.
+                        //1% chance generate an item on grass.
                         if(rand()%100 == 1){
                             //10% chance generate watermelon.
                             if(rand()%10 == 1){
@@ -136,6 +142,36 @@ class Map{
                 decoration.insert(decoration.begin(), newRow);
             }
             //Generate mob based on tile.
+            std::vector<int> mobRow;
+            for(int i = height; i >= 0; --i){
+                mobRow.clear();
+                for(int j = 0; j < width; ++j){
+                    //Generate on sand tile.
+                    if((*layer1)[i][j][0] == 3){
+                        //0.05% generate a snake.
+                        if(rand()%10 == 1){
+                            mobRow.push_back(0);
+                        }
+                        else{
+                            mobRow.push_back(-1);
+                        }
+                    }
+                    //Generate on stone tile.
+                    else if((*layer1)[i][j][0] == 1){
+                        //0.01% generate a robot.
+                        if(rand()%1000 == 1){
+                            mobRow.push_back(1);
+                        }
+                        else{
+                            mobRow.push_back(-1);
+                        }
+                    }
+                    else{
+                        mobRow.push_back(-1);
+                    }
+                }
+                mob.insert(mob.begin(), mobRow);
+            }
         }
 
         void display(int x, int y){
@@ -163,6 +199,12 @@ class Map{
                     //Draw decoration.
                     if(decoration[row][column][0] == 0){
                         Image.Open(decorationIDMap[decoration[row][column][0]][decoration[row][column][1]].data());
+                        Image.Draw(x + column * 16, y + (row - startRow) * 16);
+                        Image.Close();
+                    }
+                    //Draw mob.
+                    if(mob[row][column] != -1){
+                        Image.Open(mobIDMap[mob[row][column]][0].data());
                         Image.Draw(x + column * 16, y + (row - startRow) * 16);
                         Image.Close();
                     }
