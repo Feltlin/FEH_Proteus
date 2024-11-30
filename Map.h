@@ -228,7 +228,10 @@ class Map{
         }
 
         void moveUp(Player *player){
-            if(!collide(moss[startRow + player->y - 1][player->x][0])){
+            if(mob[startRow + player->y - 1][player->x] != -1){
+                mob[startRow + player->y - 1][player->x] = -1;
+            }
+            else if(!collide(moss[startRow + player->y - 1][player->x][0])){
                 ++step;
                 if(player->y > height / 2){
                         --player->y;
@@ -248,7 +251,10 @@ class Map{
         }
 
         void moveLeft(Player *player){
-            if(player->x > 0){
+            if(mob[startRow + player->y][player->x - 1] != -1){
+                mob[startRow + player->y][player->x - 1] = -1;
+            }
+            else if(player->x > 0){
                 if(!collide(moss[startRow + player->y][player->x - 1][0])){
                     --player->x;
                 }
@@ -258,7 +264,10 @@ class Map{
         }
 
         void moveRight(Player *player){
-            if(player->x < 19){
+            if(mob[startRow + player->y][player->x + 1] != -1){
+                mob[startRow + player->y][player->x + 1] = -1;
+            }
+            else if(player->x < 19){
                 if(!collide(moss[startRow + player->y][player->x + 1][0])){
                     ++player->x;
                 }
@@ -268,7 +277,10 @@ class Map{
         }
 
         void moveDown(Player *player){
-            if(player->y < height - 1){
+            if(mob[startRow + player->y + 1][player->x] != -1){
+                mob[startRow + player->y + 1][player->x] = -1;
+            }
+            else if(player->y < height - 1){
                 if(!collide(moss[startRow + player->y + 1][player->x][0])){
                     --step;
                     ++player->y;
