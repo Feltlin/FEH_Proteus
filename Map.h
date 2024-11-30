@@ -170,6 +170,21 @@ class Map{
             }
         }
 
+        void tileAction(Player *player){
+            //Detect the decoration/item on the tile.
+            if(decoration[startRow + player->y][player->x][0] == 0){
+                //Apple detected.
+                if(decoration[startRow + player->y][player->x][1] == 0){
+                    player->health += 5;
+                }
+                //Watermelon detected.
+                else if(decoration[startRow + player->y][player->x][0] == 1){
+                    player->health += 20;
+                }
+                decoration[startRow + player->y][player->x][0] = -1;
+            }
+        }
+
         void moveUp(Player *player){
             if(!collide(moss[startRow + player->y - 1][player->x][0])){
                 ++step;

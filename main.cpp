@@ -181,6 +181,9 @@ int main(){
                 //Display the player.
                 player.display();
 
+                //Detect what happened in this tile.
+                map.tileAction(&player);
+
                 //Display the item.
                 item.display();
 
