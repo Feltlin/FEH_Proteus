@@ -43,6 +43,7 @@ int main(){
     int t = 0;
     int amplitude = 4;
     int period = 2;
+    bool keyChose = false;
 
 
     //Game loop.
@@ -84,7 +85,12 @@ int main(){
 
                 //Start the main game.
                 if(text.button("Start",  lava[1], 136, 120, 2, lava[1], -1, 0xffffff - lava[1])){
-                    state = 5;
+                    if(!keyChose){
+                        state = 5;
+                    }
+                    else{
+                        state = 10;
+                    }
                 }
 
                 //Generate a new map.
@@ -215,6 +221,10 @@ int main(){
 
                 //Display the steps that player have traveled.
                 text.button(std::to_string(map.step), lava[3], 150, 16, 1, 0xffffff, lava[0]);
+
+                if(player.health <= 0){
+                    state = 11;
+                }
 
                 //Open in-game menu.
                 switch(menuState){
@@ -358,7 +368,20 @@ int main(){
                         }    
                 }
                 break;
-            
+
+            case 11:
+                text.display("You died", lava[4], 150, 100);
+                if(text.button("Restart", 0xB4C4AE, 50, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
+                    if(!text.click[0] && text.click[1]){
+                        map.reset();
+                        player.x = 10;
+                        player.y = 14;
+                    }
+                    player.health = 100;
+                    state = 1;
+                }
+                break;
+                
             case 20:
                 largeMap.displayPixel(largePlayer.x, largePlayer.y);
                 if(text.button("Back", 0xB4C4AE, 10, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){

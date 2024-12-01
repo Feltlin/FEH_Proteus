@@ -85,7 +85,7 @@ class Player{
             Image.Close();
 
             //Draw the health bar.
-            if(health == 100){
+            if(health >= 100){
                 Image.Open("./Image/FullHealth.png");
             }
             else if(health >= 90){
@@ -111,9 +111,6 @@ class Player{
             }
             else if(health >= 20){
                 Image.Open("./Image/20Health.png");
-            }
-            else if(health >= 10){
-                Image.Open("./Image/80Health.png");
             }
             else if(health >= 10){
                 Image.Open("./Image/10Health.png");

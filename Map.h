@@ -62,7 +62,9 @@ class Map{
 
             mobIDMap[0] = {"./Image/Snake.png"};
             mobIDMap[1] = {"./Image/Robot.png"};
-            mobIDMap[2] = {"./Image/Cod.png"};
+            mobIDMap[2] = {"./Image/Wizard_L.png"};
+            mobIDMap[3] = {"./Image/Cod.png"};
+
         }
 
         //Start a new map.
@@ -163,6 +165,14 @@ class Map{
                         //0.01% generate a robot.
                         if(rand()%1000 == 1){
                             mobRow.push_back({1, 100});
+                        }
+                        else{
+                            mobRow.push_back({-1, 0});
+                        }
+                    }
+                    else if((*layer1)[i][j][0] == 2){
+                        if(rand()%600 == 1){
+                            mobRow.push_back({2, 25});
                         }
                         else{
                             mobRow.push_back({-1, 0});
@@ -303,6 +313,9 @@ class Map{
                 }
                 else if(mob[x][y][0] == 1){
                     *health -= 50;
+                }
+                else if(mob[x][y][0] == 2){
+                    *health -= 15;
                 }
                 if(mob[x][y][1] < 0){
                     mob[x][y][0] = -1;
