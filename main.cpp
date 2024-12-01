@@ -26,7 +26,7 @@ int main(){
     Player player(10, 14);
     Item item(10, 16);
     FEHImage Image;
-    int state = 0, menuState = 0;
+    int state = 0, menuState = 0, keyState = 0;
     float tx, ty;
 
     //Color gradient from light to dark.
@@ -41,6 +41,7 @@ int main(){
     int t = 0;
     int amplitude = 4;
     int period = 2;
+
 
     //Game loop.
     while (1){
@@ -81,7 +82,7 @@ int main(){
 
                 //Start the main game.
                 if(text.button("Start",  lava[1], 136, 120, 2, lava[1], -1, 0xffffff - lava[1])){
-                    state = 10;
+                    state = 5;
                 }
 
                 //Generate a new map.
@@ -173,6 +174,21 @@ int main(){
                 }
                 break;
 
+            case 5:
+                text.display("Choose movement feature", 0x586994, 100, 50);
+                if(text.button("WASD Keys", 0x586994, 50, 100)){
+                    keyState = 0;
+                    state = 10;
+                }
+                if(text.button("Arrow buttons", 0x586994, 125, 100)){
+                    keyState = 1;
+                    state = 10;
+                }
+                if(text.button("Both", 0x586994, 225, 100)){
+                    keyState = 2;
+                    state = 10;
+                }
+                break;
             //Main game.
             case 10:
                 //Move the mob.
@@ -210,36 +226,74 @@ int main(){
                         }
 
                         //Key press and button press detection. Future may let the player choose to use only button or only key press or both.
-                        if(keyW.bind('W')){
-                            map.moveUp( &player);
-                        }
-                        else if(keyA.bind('A')){
-                            map.moveLeft(&player);
-                        }
-                        else if(keyD.bind('D')){
-                            map.moveRight(&player);
-                        }
-                        else if(keyS.bind('S')){
-                            map.moveDown(&player);
-                        }
-                        if(moveUp.button("^", paleMoss[0], 270, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
-                            if(!moveUp.click[0] && moveUp.click[1]){
-                                map.moveUp(&player);
+                        if(keyState == 0){
+                            if(keyW.bind('W')){
+                                map.moveUp( &player);
                             }
-                        }
-                        if(moveLeft.button("<", paleMoss[0], 240, 210, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
-                            if(!moveLeft.click[0] && moveLeft.click[1]){
+                            else if(keyA.bind('A')){
                                 map.moveLeft(&player);
                             }
-                        }
-                        if(moveRight.button(">", paleMoss[0], 300, 210, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
-                            if(!moveRight.click[0] && moveRight.click[1]){
+                            else if(keyD.bind('D')){
                                 map.moveRight(&player);
                             }
-                        }
-                        if(moveDown.button("v", paleMoss[0], 270, 220, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
-                            if(!moveDown.click[0] && moveDown.click[1]){
+                            else if(keyS.bind('S')){
                                 map.moveDown(&player);
+                            }
+                        }
+                        else if(keyState == 1){
+                            if(moveUp.button("^", paleMoss[0], 270, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
+                                if(!moveUp.click[0] && moveUp.click[1]){
+                                map.moveUp(&player);
+                                }
+                            }
+                            if(moveLeft.button("<", paleMoss[0], 240, 210, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
+                                if(!moveLeft.click[0] && moveLeft.click[1]){
+                                map.moveLeft(&player);
+                                }
+                            }
+                            if(moveRight.button(">", paleMoss[0], 300, 210, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
+                                if(!moveRight.click[0] && moveRight.click[1]){
+                                    map.moveRight(&player);
+                                }
+                            }
+                            if(moveDown.button("v", paleMoss[0], 270, 220, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
+                                if(!moveDown.click[0] && moveDown.click[1]){
+                                    map.moveDown(&player);
+                                }
+                            }
+                        }
+                        else if(keyState == 2){
+                            if(keyW.bind('W')){
+                                map.moveUp( &player);
+                            }
+                            else if(keyA.bind('A')){
+                                map.moveLeft(&player);
+                            }
+                            else if(keyD.bind('D')){
+                                map.moveRight(&player);
+                            }
+                            else if(keyS.bind('S')){
+                                map.moveDown(&player);
+                            }
+                            if(moveUp.button("^", paleMoss[0], 270, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
+                                if(!moveUp.click[0] && moveUp.click[1]){
+                                map.moveUp(&player);
+                                }
+                            }
+                            if(moveLeft.button("<", paleMoss[0], 240, 210, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
+                                if(!moveLeft.click[0] && moveLeft.click[1]){
+                                map.moveLeft(&player);
+                                }
+                            }
+                            if(moveRight.button(">", paleMoss[0], 300, 210, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
+                                if(!moveRight.click[0] && moveRight.click[1]){
+                                    map.moveRight(&player);
+                                }
+                            }
+                            if(moveDown.button("v", paleMoss[0], 270, 220, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
+                                if(!moveDown.click[0] && moveDown.click[1]){
+                                    map.moveDown(&player);
+                                }
                             }
                         }
                         break;
