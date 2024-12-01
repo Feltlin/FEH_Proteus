@@ -200,12 +200,12 @@ int main(){
                     case 0:
 
                         //Back to the main screen..
-                        if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                        if(text.button("Back", 0xB4C4AE, 10, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
                             state = 1;
                         }
 
                         //Open the menu.
-                        if(text.button("Menu", 0xB4C4AE, 100, 170, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                        if(text.button("Inventory", 0xB4C4AE, 10, 220, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
                             menuState = 1;
                         }
 
@@ -222,22 +222,22 @@ int main(){
                         else if(keyS.bind('S')){
                             map.moveDown(&player);
                         }
-                        if(moveUp.button("^", 0xB4C4AE, 100, 100, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                        if(moveUp.button("^", paleMoss[0], 270, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
                             if(!moveUp.click[0] && moveUp.click[1]){
                                 map.moveUp(&player);
                             }
                         }
-                        if(moveLeft.button("<", 0xB4C4AE, 70, 110, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                        if(moveLeft.button("<", paleMoss[0], 240, 210, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
                             if(!moveLeft.click[0] && moveLeft.click[1]){
                                 map.moveLeft(&player);
                             }
                         }
-                        if(moveRight.button(">", 0xB4C4AE, 130, 110, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                        if(moveRight.button(">", paleMoss[0], 300, 210, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
                             if(!moveRight.click[0] && moveRight.click[1]){
                                 map.moveRight(&player);
                             }
                         }
-                        if(moveDown.button("v", 0xB4C4AE, 100, 120, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                        if(moveDown.button("v", paleMoss[0], 270, 220, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
                             if(!moveDown.click[0] && moveDown.click[1]){
                                 map.moveDown(&player);
                             }
@@ -255,7 +255,7 @@ int main(){
                         
                         if(text.imageButton("./Image/WoodenSword.png", 20, 20, 0)){
                             if(!text.click[0] && text.click[1]){
-                                player.role = 'W';
+                                player.role = 'K';
                                 menuState = 0;
                             }
                         }
