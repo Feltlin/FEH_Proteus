@@ -231,7 +231,7 @@ class Map{
 
         void moveUp(Player *player){
             if(mob[startRow + player->y - 1][player->x][0] != -1){
-                fight(startRow + player->y - 1, player->x, player->damage);
+                fight(startRow + player->y - 1, player->x, &(player->damage), &(player->health));
             }
             else if(!collide(moss[startRow + player->y - 1][player->x][0])){
                 ++step;
@@ -254,7 +254,7 @@ class Map{
 
         void moveLeft(Player *player){
             if(mob[startRow + player->y][player->x - 1][0] != -1){
-                fight(startRow + player->y, player->x - 1, player->damage);
+                fight(startRow + player->y, player->x - 1, &(player->damage), &(player->health));
             }
             else if(player->x > 0){
                 if(!collide(moss[startRow + player->y][player->x - 1][0])){
@@ -268,7 +268,7 @@ class Map{
 
         void moveRight(Player *player){
             if(mob[startRow + player->y][player->x + 1][0] != -1){
-                fight(startRow + player->y, player->x + 1, player->damage);
+                fight(startRow + player->y, player->x + 1, &(player->damage), &(player->health));
             }
             else if(player->x < 19){
                 if(!collide(moss[startRow + player->y][player->x + 1][0])){
@@ -282,7 +282,7 @@ class Map{
 
         void moveDown(Player *player){
             if(mob[startRow + player->y + 1][player->x][0] != -1){
-                fight(startRow + player->y + 1, player->x, player->damage);
+                fight(startRow + player->y + 1, player->x, &(player->damage), &(player->health));
             }
             else if(player->y < height - 1){
                 if(!collide(moss[startRow + player->y + 1][player->x][0])){
@@ -294,10 +294,16 @@ class Map{
         }
 
         //Mob combat.
-        void fight(int x, int y, int damage){
+        void fight(int x, int y, int *damage, int *health){
             mobAction = false;
             if(mob[x][y][1] > 0){
-                mob[x][y][1] -= damage;
+                mob[x][y][1] -= *damage;
+                if(mob[x][y][0] == 0){
+                    *health -= 5;
+                }
+                else if(mob[x][y][0] == 1){
+                    *health -= 50;
+                }
                 if(mob[x][y][1] < 0){
                     mob[x][y][0] = -1;
                     ++killCount;

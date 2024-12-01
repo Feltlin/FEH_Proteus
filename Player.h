@@ -17,7 +17,39 @@ class Player{
             this->x = x;
             this->y = y;
             health = 100;
-            damage = 3;
+            damage = 0;
+        }
+
+        void invDisplay(int x, int y){
+            //Draw the player.
+            switch(role){
+                case 'K':
+                    switch(direction){
+                        case 'L':
+                            Image.Open("./Image/Knight_L.png");
+                            break;
+                        
+                        case 'R':
+                            Image.Open("./Image/Knight_R.png");
+                            break;
+
+                    }
+                    break;
+
+                case 'W':
+                    switch(direction){
+                        case 'L':
+                            Image.Open("./Image/Wizard_L.png");
+                            break;
+                        
+                        case 'R':
+                            Image.Open("./Image/Wizard_R.png");
+                            break;
+                    }
+                    break;
+            }
+            Image.Draw(x, y);
+            Image.Close();
         }
 
         void display(){
@@ -53,7 +85,10 @@ class Player{
             Image.Close();
 
             //Draw the health bar.
-            if(health >= 90){
+            if(health == 100){
+                Image.Open("./Image/FullHealth.png");
+            }
+            else if(health >= 90){
                 Image.Open("./Image/90Health.png");
             }
             else if(health >= 80){
