@@ -24,16 +24,7 @@ class Player{
             //Draw the player.
             switch(role){
                 case 'K':
-                    switch(direction){
-                        case 'L':
-                            Image.Open("./Image/Knight_L.png");
-                            break;
-                        
-                        case 'R':
-                            Image.Open("./Image/Knight_R.png");
-                            break;
-
-                    }
+                    Image.Open("./Image/Knight_Lx64.png");
                     break;
 
                 case 'W':
