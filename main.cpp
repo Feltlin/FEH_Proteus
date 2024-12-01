@@ -7,6 +7,7 @@
 
 #include "Text.h"
 #include "Map.h"
+#include "LargeMap.h"
 #include "Player.h"
 #include "Key.h"
 #include "Item.h"
@@ -23,7 +24,8 @@ int main(){
     Text newMap, moveUp, moveLeft, moveRight, moveDown;
     Key keyW, keyA, keyD, keyS;
     Map map;
-    Player player(10, 14);
+    LargeMap largeMap;
+    Player player(10, 14), largePlayer(0, 0);
     Item item(10, 16);
     FEHImage Image;
     int state = 0, menuState = 0, keyState = 0;
@@ -107,6 +109,11 @@ int main(){
                 //Switch to stats screen.
                 if(text.button("Stats", lava[4], 136, 180, 2, lava[4], -1, 0xffffff - lava[4])){
                     state = 4;
+                }
+
+                //Switch to large map.
+                if(text.button("?(Experimental)", lava[5], 136, 200, 2, lava[5], -1, 0xffffff - lava[5])){
+                    state = 20;
                 }
 
                 //Keyboard 'A' press detection.
@@ -352,6 +359,24 @@ int main(){
                 }
                 break;
             
+            case 20:
+                largeMap.displayPixel(largePlayer.x, largePlayer.y);
+                if(text.button("Back", 0xB4C4AE, 10, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
+                    state = 1;
+                }
+                if(keyW.bind('W')){
+                    largePlayer.y -= 16;
+                }
+                else if(keyA.bind('A')){
+                    largePlayer.x -= 16;
+                }
+                else if(keyD.bind('D')){
+                    largePlayer.x += 16;
+                }
+                else if(keyS.bind('S')){
+                    largePlayer.y += 16;
+                }
+                break;
         }
 
         //Update the frame.
