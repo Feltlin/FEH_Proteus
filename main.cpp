@@ -246,49 +246,55 @@ int main(){
 
                     //When the in-game menu is open.
                     case 1:
-                        player.display();
                         text.drawBorder(foggyValley[0], 10, 10, 310, 230);
                         text.drawBox(foggyValley[1], 10, 10, 310, 230);
+                        player.invDisplay(200, 100);
+                        text.display("HP: " + std::to_string(player.health), lava[3], 20, 200);
+                        text.display("Damage: " + std::to_string(player.damage), lava[4], 20, 208);
                         if(text.button("Back", 0xB4C4AE, 150, 170, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                             menuState = 0;
                         }
                         
                         if(text.imageButton("./Image/WoodenSword.png", 20, 20, 0)){
                             if(!text.click[0] && text.click[1]){
-                                player.role = 'K';
-                                menuState = 0;
+                                    player.damage = 3;
                             }
                         }
-                        if(text.imageButton("./Image/StoneSword.png", 40, 20, 0)){
-                            if(!text.click[0] && text.click[1]){
-                                player.role = 'W';
-                                menuState = 0;
+                        if(map.killCount >= 50){
+                            if(text.imageButton("./Image/StoneSword.png", 40, 20, 0)){
+                                if(!text.click[0] && text.click[1]){
+                                    player.damage = 5;
+                                }
                             }
                         }
-                        if(text.imageButton("./Image/GoldSword.png", 60, 20, 0)){
-                            if(!text.click[0] && text.click[1]){
-                                player.role = 'W';
-                                menuState = 0;
+                        if(map.killCount >= 100){
+                            if(text.imageButton("./Image/GoldSword.png", 60, 20, 0)){
+                                if(!text.click[0] && text.click[1]){
+                                    player.damage = 8;
+                                }
                             }
                         }
-                        if(text.imageButton("./Image/EmeraldSword.png", 80, 20, 0)){
-                            if(!text.click[0] && text.click[1]){
-                                player.role = 'W';
-                                menuState = 0;
+                        if(map.killCount >= 150){
+                            if(text.imageButton("./Image/EmeraldSword.png", 80, 20, 0)){
+                                if(!text.click[0] && text.click[1]){
+                                    player.damage = 10;
+                                }
                             }
                         }
-                        if(text.imageButton("./Image/RubySword.png", 100, 20, 0)){
-                            if(!text.click[0] && text.click[1]){
-                                player.role = 'W';
-                                menuState = 0;
+                        if(map.killCount >= 200){
+                            if(text.imageButton("./Image/RubySword.png", 100, 20, 0)){
+                                if(!text.click[0] && text.click[1]){
+                                    player.damage = 13;
+                                }
                             }
                         }
-                        if(text.imageButton("./Image/DiamondSword.png", 120, 20, 0)){
-                            if(!text.click[0] && text.click[1]){
-                                player.role = 'W';
-                                menuState = 0;
+                        if(map.killCount >= 500){
+                            if(text.imageButton("./Image/DiamondSword.png", 120, 20, 0)){
+                                if(!text.click[0] && text.click[1]){
+                                    player.damage = 100;
+                                }
                             }
-                        }
+                        }    
                 }
                 break;
             
