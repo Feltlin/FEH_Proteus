@@ -9,6 +9,7 @@ class Player{
         FEHImage Image;
         int x, y;
         int health;
+        int damage;
         char role = 'K';
         char direction = 'R';
 
@@ -16,6 +17,7 @@ class Player{
             this->x = x;
             this->y = y;
             health = 100;
+            damage = 3;
         }
 
         void display(){

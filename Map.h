@@ -229,7 +229,7 @@ class Map{
 
         void moveUp(Player *player){
             if(mob[startRow + player->y - 1][player->x][0] != -1){
-                mob[startRow + player->y - 1][player->x][0] = -1;
+                fight(startRow + player->y - 1, player->x, player->damage);
             }
             else if(!collide(moss[startRow + player->y - 1][player->x][0])){
                 ++step;
@@ -252,7 +252,7 @@ class Map{
 
         void moveLeft(Player *player){
             if(mob[startRow + player->y][player->x - 1][0] != -1){
-                mob[startRow + player->y][player->x - 1][0] = -1;
+                fight(startRow + player->y, player->x - 1, player->damage);
             }
             else if(player->x > 0){
                 if(!collide(moss[startRow + player->y][player->x - 1][0])){
@@ -265,7 +265,7 @@ class Map{
 
         void moveRight(Player *player){
             if(mob[startRow + player->y][player->x + 1][0] != -1){
-                mob[startRow + player->y][player->x + 1][0] = -1;
+                fight(startRow + player->y, player->x + 1, player->damage);
             }
             else if(player->x < 19){
                 if(!collide(moss[startRow + player->y][player->x + 1][0])){
@@ -278,13 +278,26 @@ class Map{
 
         void moveDown(Player *player){
             if(mob[startRow + player->y + 1][player->x][0] != -1){
-                mob[startRow + player->y + 1][player->x][0] = -1;
+                fight(startRow + player->y + 1, player->x, player->damage);
             }
             else if(player->y < height - 1){
                 if(!collide(moss[startRow + player->y + 1][player->x][0])){
                     --step;
                     ++player->y;
                 }
+            }
+        }
+
+        //Mob combat.
+        void fight(int x, int y, int damage){
+            if(mob[x][y][1] > 0){
+                mob[x][y][1] -= damage;
+                if(mob[x][y][1] < 0){
+                    mob[x][y][0] = -1;
+                }
+            }
+            else{
+                mob[x][y][0] = -1;
             }
         }
 
