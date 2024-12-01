@@ -35,7 +35,9 @@ class Map{
         int maxstep = 0;
         int randnum = rand();
         int tempnum = rand();
-        int killCount = 0;
+        int totalKillCount = 0;
+        int singleKillCount = 0;
+        std::vector<int> singleKillCountBoard;
         int mobAction = false;
         //width=20, height=15
         std::vector<std::vector<std::array<float, 2>>> layer0;
@@ -73,6 +75,12 @@ class Map{
             chunky = 0;
             maxstep = std::max(step, maxstep);
             step = 0;
+            totalKillCount += singleKillCount;
+            singleKillCountBoard.push_back(singleKillCount);
+            std::sort(singleKillCountBoard.begin(), singleKillCountBoard.end(), std::greater<int>());
+            if(singleKillCountBoard.size() > 10){
+                singleKillCountBoard.erase(singleKillCountBoard.begin() + 10, singleKillCountBoard.end());
+            }
             randnum = rand();
             tempnum = rand();
             layer0.clear();
@@ -323,7 +331,7 @@ class Map{
                 }
                 if(mob[x][y][1] < 0){
                     mob[x][y][0] = -1;
-                    ++killCount;
+                    ++singleKillCount;
                 }
             }
             else{

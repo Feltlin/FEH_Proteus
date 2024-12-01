@@ -179,7 +179,11 @@ int main(){
             case 4:
                 text.display("Stats", 0x586994, 100, 50);
                 text.display("Max Step: " + std::to_string(map.maxstep), foggyValley[1], 100, 60);
-                text.display("Kill Count: " + std::to_string(map.killCount), foggyValley[2], 100, 70);
+                text.display("Total Kill Count: " + std::to_string(map.totalKillCount), foggyValley[2], 100, 70);
+                text.display("Top Kill Count Board: ", foggyValley[2], 100, 78);
+                for(int i = 0; i < map.singleKillCountBoard.size(); ++i){
+                    text.display(std::to_string(map.singleKillCountBoard[i]), lava[i], 100, 86 + 8*i);
+                }
 
                 //Back to the main screen.
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
@@ -334,35 +338,35 @@ int main(){
                                     player.damage = 3;
                             }
                         }
-                        if(map.killCount >= 50){
+                        if(map.totalKillCount >= 50){
                             if(text.imageButton("./Image/StoneSword.png", 40, 20, 0)){
                                 if(!text.click[0] && text.click[1]){
                                     player.damage = 5;
                                 }
                             }
                         }
-                        if(map.killCount >= 100){
+                        if(map.totalKillCount >= 100){
                             if(text.imageButton("./Image/GoldSword.png", 60, 20, 0)){
                                 if(!text.click[0] && text.click[1]){
                                     player.damage = 8;
                                 }
                             }
                         }
-                        if(map.killCount >= 150){
+                        if(map.totalKillCount >= 150){
                             if(text.imageButton("./Image/EmeraldSword.png", 80, 20, 0)){
                                 if(!text.click[0] && text.click[1]){
                                     player.damage = 10;
                                 }
                             }
                         }
-                        if(map.killCount >= 200){
+                        if(map.totalKillCount >= 200){
                             if(text.imageButton("./Image/RubySword.png", 100, 20, 0)){
                                 if(!text.click[0] && text.click[1]){
                                     player.damage = 13;
                                 }
                             }
                         }
-                        if(map.killCount >= 500){
+                        if(map.totalKillCount >= 500){
                             if(text.imageButton("./Image/DiamondSword.png", 120, 20, 0)){
                                 if(!text.click[0] && text.click[1]){
                                     player.damage = 100;
