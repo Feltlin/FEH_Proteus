@@ -83,6 +83,10 @@ class Map{
             std::vector<std::array<float, 2>> newRow;
             //Generate water and stone.
             ++chunky;
+            if((*layer0).size() >= 100){
+                layer0->erase(layer0->begin() + 100, layer0->end());
+                layer1->erase(layer1->begin() + 100, layer1->end());
+            }
             for(int i = height; i >= 0; --i){
                 newRow.clear();
                 for(int j = 0; j < width; ++j){
