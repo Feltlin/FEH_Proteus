@@ -165,6 +165,7 @@ int main(){
             case 4:
                 text.display("Stats", 0x586994, 100, 50);
                 text.display("Max Step: " + std::to_string(map.maxstep), foggyValley[1], 100, 60);
+                text.display("Kill Count: " + std::to_string(map.killCount), foggyValley[2], 100, 70);
 
                 //Back to the main screen.
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
@@ -174,6 +175,8 @@ int main(){
 
             //Main game.
             case 10:
+                //Move the mob.
+                map.mobMove();
 
                 //Display the map.
                 map.display(0, 0);

@@ -35,6 +35,8 @@ class Map{
         int maxstep = 0;
         int randnum = rand();
         int tempnum = rand();
+        int killCount = 0;
+        int mobAction = false;
         //width=20, height=15
         std::vector<std::vector<std::array<float, 2>>> layer0;
         std::vector<std::vector<std::array<float, 2>>> moss;
@@ -149,7 +151,7 @@ class Map{
                     //Generate on sand tile.
                     if((*layer1)[i][j][0] == 3){
                         //0.05% generate a snake.
-                        if(rand()%10 == 1){
+                        if(rand()%200 == 1){
                             mobRow.push_back({0, 10});
                         }
                         else{
@@ -233,6 +235,7 @@ class Map{
             }
             else if(!collide(moss[startRow + player->y - 1][player->x][0])){
                 ++step;
+                mobAction = true;
                 if(player->y > height / 2){
                         --player->y;
                 }
@@ -247,7 +250,6 @@ class Map{
                     --startRow;
                 }
             }
-            
         }
 
         void moveLeft(Player *player){
@@ -257,6 +259,7 @@ class Map{
             else if(player->x > 0){
                 if(!collide(moss[startRow + player->y][player->x - 1][0])){
                     --player->x;
+                    mobAction = true;
                 }
             }
             player->direction = 'L';
@@ -270,6 +273,7 @@ class Map{
             else if(player->x < 19){
                 if(!collide(moss[startRow + player->y][player->x + 1][0])){
                     ++player->x;
+                    mobAction = true;
                 }
             }
             player->direction = 'R';
@@ -284,20 +288,63 @@ class Map{
                 if(!collide(moss[startRow + player->y + 1][player->x][0])){
                     --step;
                     ++player->y;
+                    mobAction = true;
                 }
             }
         }
 
         //Mob combat.
         void fight(int x, int y, int damage){
+            mobAction = false;
             if(mob[x][y][1] > 0){
                 mob[x][y][1] -= damage;
                 if(mob[x][y][1] < 0){
                     mob[x][y][0] = -1;
+                    ++killCount;
                 }
             }
             else{
                 mob[x][y][0] = -1;
+            }
+        }
+
+        //Move the mob.
+        void mobMove(){
+            if(mobAction == true){
+                mobAction = false;
+                for(int i = startRow + height; i >= startRow; --i){
+                    for(int j = 0; j < width; ++j){
+                        if(mob[i][j][0] != -1){
+                            int direction = rand() % 9;
+                            switch(direction){
+                                case 0: case 1: case 2: case 3:
+                                    if(j + 1 < width && mob[i][j + 1][0] == -1){
+                                        mob[i][j + 1] = mob[i][j];
+                                        mob[i][j] = {-1, 0};
+                                    }
+                                    break;
+                                case 4:
+                                    if(i - 1 >= 0 && mob[i - 1][j][0] == -1){
+                                        mob[i - 1][j] = mob[i][j];
+                                        mob[i][j] = {-1, 0};
+                                    }
+                                    break;
+                                case 5: case 6: case 7: case 8:
+                                    if(j - 1 >= 0 && mob[i][j - 1][0] == -1){
+                                        mob[i][j - 1] = mob[i][j];
+                                        mob[i][j] = {-1, 0};
+                                    }
+                                    break;
+                                case 9:
+                                    if(i + 1 < mob.size() && mob[i + 1][j][0] == -1){
+                                        mob[i + 1][j] = mob[i][j];
+                                        mob[i][j] = {-1, 0};
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
             }
         }
 
