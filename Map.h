@@ -236,7 +236,7 @@ class Map{
                     player->health += 5;
                 }
                 //Watermelon detected.
-                else if(decoration[startRow + player->y][player->x][0] == 1){
+                else if(decoration[startRow + player->y][player->x][1] == 1){
                     player->health += 20;
                 }
                 decoration[startRow + player->y][player->x][0] = -1;

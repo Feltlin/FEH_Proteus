@@ -191,14 +191,17 @@ int main(){
                 text.display("Choose movement feature", 0x586994, 100, 50);
                 if(text.button("WASD Keys", 0x586994, 50, 100)){
                     keyState = 0;
+                    keyChose= true;
                     state = 10;
                 }
                 if(text.button("Arrow buttons", 0x586994, 125, 100)){
                     keyState = 1;
+                    keyChose= true;
                     state = 10;
                 }
                 if(text.button("Both", 0x586994, 225, 100)){
                     keyState = 2;
+                    keyChose= true;
                     state = 10;
                 }
                 break;
