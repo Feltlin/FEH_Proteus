@@ -274,8 +274,8 @@ int main(){
                             menuState = 1;
                         }
 
-                        //Key press and button press detection. Future may let the player choose to use only button or only key press or both.
-                        if(keyState == 0){
+                        //Key press and button press detection.
+                        if(keyState == 0 || keyState == 2){
                             if(keyW.bind('W')){
                                 map.moveUp( &player);
                             }
@@ -289,41 +289,7 @@ int main(){
                                 map.moveDown(&player);
                             }
                         }
-                        else if(keyState == 1){
-                            if(moveUp.button("^", paleMoss[0], 270, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
-                                if(!moveUp.click[0] && moveUp.click[1]){
-                                map.moveUp(&player);
-                                }
-                            }
-                            if(moveLeft.button("<", paleMoss[0], 240, 210, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
-                                if(!moveLeft.click[0] && moveLeft.click[1]){
-                                map.moveLeft(&player);
-                                }
-                            }
-                            if(moveRight.button(">", paleMoss[0], 300, 210, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
-                                if(!moveRight.click[0] && moveRight.click[1]){
-                                    map.moveRight(&player);
-                                }
-                            }
-                            if(moveDown.button("v", paleMoss[0], 270, 220, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
-                                if(!moveDown.click[0] && moveDown.click[1]){
-                                    map.moveDown(&player);
-                                }
-                            }
-                        }
-                        else if(keyState == 2){
-                            if(keyW.bind('W')){
-                                map.moveUp( &player);
-                            }
-                            else if(keyA.bind('A')){
-                                map.moveLeft(&player);
-                            }
-                            else if(keyD.bind('D')){
-                                map.moveRight(&player);
-                            }
-                            else if(keyS.bind('S')){
-                                map.moveDown(&player);
-                            }
+                        if(keyState == 1 || keyState == 2){
                             if(moveUp.button("^", paleMoss[0], 270, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
                                 if(!moveUp.click[0] && moveUp.click[1]){
                                 map.moveUp(&player);
