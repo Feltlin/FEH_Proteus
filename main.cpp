@@ -374,7 +374,7 @@ int main(){
                                 }
                             }
                         }
-                        if(map.maxStep >= 5){
+                        if(map.maxStep >= 500){
                             if(waterBoot.imageButton("./Image/WaterBoot.png", 20, 40, 0)){
                                 if(!waterBoot.click[0] && waterBoot.click[1]){
                                     auto tileLocation = find(map.collisionTile.begin(), map.collisionTile.end(), 8);
