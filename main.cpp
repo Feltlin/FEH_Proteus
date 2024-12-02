@@ -21,7 +21,7 @@ int main(){
     //Predefined object and variable.
     //Screen max: w=320=16*20, h=240=16*15
     Text text;
-    Text newMap, moveUp, moveLeft, moveRight, moveDown;
+    Text newMap, moveUp, moveLeft, moveRight, moveDown, waterBoot;
     Key keyW, keyA, keyD, keyS;
     Map map;
     LargeMap largeMap;
@@ -178,7 +178,7 @@ int main(){
             //Stats screen.
             case 4:
                 text.display("Stats", 0x586994, 100, 50);
-                text.display("Max Step: " + std::to_string(map.maxstep), foggyValley[1], 100, 60);
+                text.display("Max Step: " + std::to_string(map.maxStep), foggyValley[1], 100, 60);
                 text.display("Total Kill Count: " + std::to_string(map.totalKillCount), foggyValley[2], 100, 70);
                 text.display("Top Kill Count Board: ", foggyValley[2], 100, 78);
                 for(int i = 0; i < map.singleKillCountBoard.size(); ++i){
@@ -209,6 +209,7 @@ int main(){
                     state = 10;
                 }
                 break;
+            
             //Main game.
             case 10:
                 //Move the mob.
@@ -372,10 +373,25 @@ int main(){
                                     player.damage = 100;
                                 }
                             }
-                        }    
+                        }
+                        if(map.maxStep >= 5){
+                            if(waterBoot.imageButton("./Image/WaterBoot.png", 20, 40, 0)){
+                                if(!waterBoot.click[0] && waterBoot.click[1]){
+                                    auto tileLocation = find(map.collisionTile.begin(), map.collisionTile.end(), 8);
+                                    if(tileLocation != map.collisionTile.end()){
+                                        map.collisionTile.erase(tileLocation);
+                                    }
+                                    else{
+                                        map.collisionTile.push_back(8);
+                                    }
+                                }
+                            }
+                        }
+                        break;
                 }
                 break;
 
+            //Death screen.
             case 11:
                 text.display("You died", lava[4], 150, 100);
                 if(text.button("Restart", 0xB4C4AE, 50, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){

@@ -32,7 +32,7 @@ class Map{
         int startRow = 0;
         int chunky = 0;
         int step = 0;
-        int maxstep = 0;
+        int maxStep = 0;
         int randnum = rand();
         int tempnum = rand();
         int totalKillCount = 0;
@@ -73,7 +73,7 @@ class Map{
         void reset(){
             startRow = 0;
             chunky = 0;
-            maxstep = std::max(step, maxstep);
+            maxStep = std::max(step, maxStep);
             step = 0;
             totalKillCount += singleKillCount;
             singleKillCountBoard.push_back(singleKillCount);
