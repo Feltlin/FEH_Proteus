@@ -20,6 +20,39 @@ class Player{
             damage = 0;
         }
 
+        void gravityDisplay(){
+
+            //Draw the player.
+            switch(role){
+                case 'K':
+                    switch(direction){
+                        case 'L':
+                            Image.Open("./Image/Knight_L.png");
+                            break;
+                        
+                        case 'R':
+                            Image.Open("./Image/Knight_R.png");
+                            break;
+
+                    }
+                    break;
+
+                case 'W':
+                    switch(direction){
+                        case 'L':
+                            Image.Open("./Image/Wizard_L.png");
+                            break;
+                        
+                        case 'R':
+                            Image.Open("./Image/Wizard_R.png");
+                            break;
+                    }
+                    break;
+            }
+            Image.Draw(x, y);
+            Image.Close();
+        }
+
         void invDisplay(int x, int y){
             //Draw the player.
             switch(role){

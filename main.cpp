@@ -25,11 +25,12 @@ int main(){
     Key keyW, keyA, keyD, keyS;
     Map map;
     LargeMap largeMap;
-    Player player(10, 14), largePlayer(0, 0);
+    Player player(10, 14), gravityPlayer(20, 100), largePlayer(0, 0);
     Item item(10, 16);
     FEHImage Image;
     int state = 0, menuState = 0, keyState = 0, statState = 0;
     float tx, ty;
+    int bx = 302, by = 222;
 
     //Color gradient from light to dark.
     std::vector<int> springBuds = {0xD9ED92, 0xB5E48C, 0x99D98C, 0x76C893, 0x52B69A, 0x34A0A4, 0x168AAD, 0x1A759F, 0x1E6091, 0x184E77};
@@ -77,6 +78,29 @@ int main(){
 
             //Main screen.
             case 1:
+                if(keyA.continueBind(TK_LEFT)){
+                    gravityPlayer.direction = 'L';
+                    if(gravityPlayer.x > 0){
+                        --gravityPlayer.x;
+                    }
+                }
+                if(keyD.continueBind(TK_RIGHT)){
+                    gravityPlayer.direction = 'R';
+                    if(gravityPlayer.x < 320){
+                        ++gravityPlayer.x;
+                    }
+                }
+                if(keyS.continueBind(TK_UP)){
+                    if(gravityPlayer.y > 0){
+                        gravityPlayer.y -= 6;
+                    }
+                }
+                if(gravityPlayer.y < 224){
+                    gravityPlayer.y += 2;
+                }
+                gravityPlayer.gravityDisplay();
+                text.drawBox(0xffffff, bx, by, bx + 16, by + 16);
+                (bx == 0) ? bx = 302 : --bx;
 
                 //Fun button, may get removed or change place in the future.
                 if(text.button("Touch me", lava[0], 136, 100, 2, lava[0], -1, 0xffffff - lava[0])){
