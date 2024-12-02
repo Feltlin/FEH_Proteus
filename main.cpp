@@ -132,19 +132,25 @@ int main(){
             case 2:
 
                 //Display the credit.
-                text.display("Creator:", foggyValley[4], 100, 50);
-                text.display("Junhao Liu", foggyValley[3], 100, 58);
-                text.display("Anthony Ezzone", foggyValley[2], 100, 66);
-                text.display("Font: Mojang", 0x157A6E, 100, 82);
-                text.display("https://www.dafont.com/mojang.font", 0x499F68, 100, 90);
-                text.display("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 0x77B28C, 100, 98);
-                text.display("abcdefghijklmnopqrstuvwxyz", 0x77B28C, 100, 106);
-                text.display("0123456789", 0x77B28C, 100, 114);
-                text.display("+-*/=%\"\'#$@&_(){}<>[]", 0xC2C5BB, 100, 122);
-                text.display(",.;:?!^~`", 0xC2C5BB, 100, 130);
+                text.display("Creator:", foggyValley[4], 10, 20);
+                text.display("Junhao Liu", foggyValley[3], 10, 28);
+                text.display("Anthony Ezzone", foggyValley[2], 10, 36);
+                text.display("Font: Mojang", 0x157A6E, 10, 52);
+                text.display("dafont.com/mojang.font", 0x499F68, 10, 60);
+                text.display("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 0x77B28C, 10, 68);
+                text.display("abcdefghijklmnopqrstuvwxyz", 0x77B28C, 10, 76);
+                text.display("0123456789", 0x77B28C, 10, 84);
+                text.display("+-*/=%\"\'#$@&_(){}<>[]", 0xC2C5BB, 10, 92);
+                text.display(",.;:?!^~`", 0xC2C5BB, 10, 100);
+                text.display("Perlin Noise Library:", foggyValley[0], 10, 116);
+                text.display("Stb Perlin", foggyValley[1], 10, 124);
+                text.display("github.com/nothings/stb/blob/master/stb_perlin.h", foggyValley[2], 10, 132);
+                text.display("FastNoiseLite", foggyValley[3], 10, 140);
+                text.display("github.com/Auburn/FastNoiseLite", foggyValley[4], 10, 148);
+
 
                 //Back to the main screen.
-                if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                if(text.button("Back", 0xB4C4AE, 100, 220, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
                     state = 1;
                 }
                 break;
