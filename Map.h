@@ -37,7 +37,10 @@ class Map{
         int tempnum = rand();
         int totalKillCount = 0;
         int singleKillCount = 0;
+        int snakeKillCount = 0, robotKillCount = 0, wizardKillCount = 0;
+        int score;
         std::vector<int> singleKillCountBoard;
+        std::vector<int> ScoreBoard;
         int mobAction = false;
         //width=20, height=15
         std::vector<std::vector<std::array<float, 2>>> layer0;
@@ -71,6 +74,7 @@ class Map{
 
         //Start a new map.
         void reset(){
+            score = step + snakeKillCount*5 + robotKillCount*100 + wizardKillCount*20;
             startRow = 0;
             chunky = 0;
             maxStep = std::max(step, maxStep);
@@ -80,6 +84,11 @@ class Map{
             std::sort(singleKillCountBoard.begin(), singleKillCountBoard.end(), std::greater<int>());
             if(singleKillCountBoard.size() > 10){
                 singleKillCountBoard.erase(singleKillCountBoard.begin() + 10, singleKillCountBoard.end());
+            }
+            ScoreBoard.push_back(score);
+            std::sort(ScoreBoard.begin(), ScoreBoard.end(), std::greater<int>());
+            if(ScoreBoard.size() > 10){
+                ScoreBoard.erase(ScoreBoard.begin() + 10, ScoreBoard.end());
             }
             randnum = rand();
             tempnum = rand();
@@ -330,8 +339,17 @@ class Map{
                     *health -= 15;
                 }
                 if(mob[x][y][1] < 0){
-                    mob[x][y][0] = -1;
                     ++singleKillCount;
+                    if(mob[x][y][0] == 0){
+                        ++snakeKillCount;
+                    }
+                    else if(mob[x][y][0] == 1){
+                        ++robotKillCount;
+                    }
+                    else if(mob[x][y][0] == 2){
+                        ++wizardKillCount;
+                    }
+                    mob[x][y][0] = -1;
                 }
             }
             else{

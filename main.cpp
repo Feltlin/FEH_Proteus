@@ -28,7 +28,7 @@ int main(){
     Player player(10, 14), largePlayer(0, 0);
     Item item(10, 16);
     FEHImage Image;
-    int state = 0, menuState = 0, keyState = 0;
+    int state = 0, menuState = 0, keyState = 0, statState = 0;
     float tx, ty;
 
     //Color gradient from light to dark.
@@ -44,7 +44,7 @@ int main(){
     int amplitude = 4;
     int period = 2;
     bool keyChose = false;
-
+    int score;
 
     //Game loop.
     while (1){
@@ -177,13 +177,37 @@ int main(){
 
             //Stats screen.
             case 4:
-                text.display("Stats", 0x586994, 100, 50);
-                text.display("Max Step: " + std::to_string(map.maxStep), foggyValley[1], 100, 60);
-                text.display("Total Kill Count: " + std::to_string(map.totalKillCount), foggyValley[2], 100, 70);
-                text.display("Top Kill Count Board: ", foggyValley[2], 100, 78);
-                for(int i = 0; i < map.singleKillCountBoard.size(); ++i){
-                    text.display(std::to_string(map.singleKillCountBoard[i]), lava[i], 100, 86 + 8*i);
+                text.display("Stats", 0x586994, 100, 20);
+                if(text.button("Step Stats", 0xB4C4AE, 10, 40, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                    statState = 0;
                 }
+                if(text.button("Kill Stats", 0xB4C4AE, 80, 40, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                    statState = 1;
+                }
+                if(text.button("Score Leaderboard", 0xB4C4AE, 150, 40, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                    statState = 2;
+                }
+                switch(statState){
+                    case 0:
+                        text.display("Max Step: " + std::to_string(map.maxstep), foggyValley[1], 100, 60);
+                        break;
+
+                    case 1:
+                        text.display("Total Kill Count: " + std::to_string(map.totalKillCount), foggyValley[2], 100, 60);
+                        text.display("Top Kill Count Board: ", foggyValley[2], 100, 68);
+                        for(int i = 0; i < map.singleKillCountBoard.size(); ++i){
+                            text.display(std::to_string(map.singleKillCountBoard[i]), lava[i], 100, 76 + 8*i);
+                        }
+                        break;
+                    
+                    case 2:
+                        text.display("Score Leaderboard: ", foggyValley[2], 100, 60);
+                        for(int i = 0; i < map.ScoreBoard.size(); ++i){
+                            text.display(std::to_string(map.ScoreBoard[i]), lava[i], 100, 68 + 8*i);
+                        }
+                        break;
+                }
+
 
                 //Back to the main screen.
                 if(text.button("Back", 0xB4C4AE, 100, 150, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
@@ -394,6 +418,8 @@ int main(){
             //Death screen.
             case 11:
                 text.display("You died", lava[4], 150, 100);
+                score = map.step + map.snakeKillCount*5 + map.robotKillCount*100 + map.wizardKillCount*20;
+                text.display("Score " + std::to_string(score), lava[5], 150, 150);
                 if(text.button("Restart", 0xB4C4AE, 50, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
                     if(!text.click[0] && text.click[1]){
                         map.reset();
@@ -402,7 +428,9 @@ int main(){
                     }
                     player.health = 100;
                     state = 1;
+
                 }
+
                 break;
                 
             case 20:
