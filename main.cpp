@@ -301,6 +301,9 @@ int main(){
                 if(player.health <= 0){
                     state = 11;
                 }
+                if(player.damage == 0){
+                    text.display("0 Damage!!! Equip a weapon in your inventory.", lava[3], 20, 32);
+                }
 
                 //Open in-game menu.
                 switch(menuState){
@@ -364,7 +367,7 @@ int main(){
                         player.invDisplay(200, 100);
                         text.display("HP: " + std::to_string(player.health), lava[3], 20, 200);
                         text.display("Damage: " + std::to_string(player.damage), lava[4], 20, 208);
-                        if(text.button("Back", 0xB4C4AE, 150, 170, 2, 0xffffff, -1, 0xffffff - 0xB4C4AE)){
+                        if(text.button("Back", paleMoss[0], 220, 180, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
                             menuState = 0;
                         }
                         
