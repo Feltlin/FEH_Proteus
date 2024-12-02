@@ -9,6 +9,7 @@
 #include <string>
 
 //Text Class to display text and button.
+//This entire text library and button detection was made by Junhao
 class Text{
     public:
 

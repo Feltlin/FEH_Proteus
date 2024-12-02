@@ -10,7 +10,6 @@
 #include "LargeMap.h"
 #include "Player.h"
 #include "Key.h"
-#include "Item.h"
 
 //Function prototype.
 void fish(FEHImage image, int* x);
@@ -26,7 +25,6 @@ int main(){
     Map map;
     LargeMap largeMap;
     Player player(10, 14), gravityPlayer(20, 100), largePlayer(0, 0);
-    Item item(10, 16);
     FEHImage image;
     int state = 0, menuState = 0, keyState = 0, statState = 0;
     float tx, ty;
@@ -90,6 +88,7 @@ int main(){
 
             //Main screen.
             case 1:
+                //Junhao wrote the hidden game
                 if(!hiddenGame){
                     if(keyA.bind('A')){
                         hiddenGame = true;
@@ -182,6 +181,7 @@ int main(){
                 }
                 break;
 
+            //Junhao wrote the credit screen
             //Credit screen.
             case 2:
 
@@ -209,9 +209,9 @@ int main(){
                 }
                 break;
 
+            //Anthony wrote the instruction screen
             //Instruction screen.
             case 3:
-
                 //Display the game background.
                 text.display("Instruction", 0x586994, 100, 50);
                 text.display("In this game you are a hero fighting his way through ", foggyValley[0], 5, 60);
@@ -235,6 +235,7 @@ int main(){
                 }
                 break;
 
+            //Anthony wrote the stats screen
             //Stats screen.
             case 4:
                 text.display("Stats", 0x586994, 100, 20);
@@ -275,6 +276,7 @@ int main(){
                 }
                 break;
 
+            //Anthony wrote the movement selection menu
             case 5:
                 text.display("Choose movement feature", 0x586994, 100, 50);
                 if(text.button("WASD Keys", 0x586994, 50, 100)){
@@ -308,8 +310,6 @@ int main(){
                 //Detect what happened in this tile.
                 map.tileAction(&player);
 
-                //Display the item.
-                item.display();
 
                 //Display the steps that player have traveled.
                 text.button(std::to_string(map.step), lava[3], 150, 16, 1, 0xffffff, lava[0]);
@@ -324,6 +324,7 @@ int main(){
                 //Open in-game menu.
                 switch(menuState){
 
+                    //Junhao wrote the code for case 0
                     //When menu is not open.
                     case 0:
 
@@ -376,6 +377,7 @@ int main(){
                         }
                         break;
 
+                    //Anthony wrote the code for case 1
                     //When the in-game menu is open.
                     case 1:
                         text.drawBorder(foggyValley[0], 10, 10, 310, 230);
@@ -444,6 +446,7 @@ int main(){
                                         map.collisionTile.erase(tileLocation);
                                     }
                                     else{
+                                        //Gets rid of collision with water allowing the user to walk on water
                                         map.collisionTile.push_back(8);
                                     }
                                 }
@@ -453,6 +456,7 @@ int main(){
                 }
                 break;
 
+            //Anthony made the death screen
             //Death screen.
             case 11:
                 text.display("You died", lava[4], 150, 100);
@@ -471,6 +475,7 @@ int main(){
 
                 break;
                 
+            //Junhao made the experimental large map
             case 20:
                 largeMap.displayPixel(largePlayer.x, largePlayer.y);
                 text.display("Use WASD for this.", alpenglow[1], 20, 20);
@@ -499,6 +504,7 @@ int main(){
     return 0;
 }
 
+//Junhao wrote this function
 //Draw the fish on the start screen.
 void fish(FEHImage image, int* x){
     image.Open("./Image/cod.png");
@@ -516,6 +522,7 @@ void fish(FEHImage image, int* x){
 //Not used.
 //Draw the 2D vector of Hex RGB image on the screen.
 //vector of pixel vectors <color, x, y>
+//Junhao wrote this function
 void draw(std::vector<std::vector<int>> *image, int x, int y){
     for(int row = 0; row < image->size(); ++row){
         for(int column = 0; column < (*image)[row].size(); ++column){

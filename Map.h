@@ -72,6 +72,7 @@ class Map{
 
         }
 
+        //This function was written by Anthony
         //Start a new map.
         void reset(){
             score = step + snakeKillCount*5 + robotKillCount*100 + wizardKillCount*20;
@@ -96,6 +97,7 @@ class Map{
             moss.clear();
         }
 
+        //Junhao wrote this function 
         void generate(std::vector<std::vector<std::array<float, 2>>> *layer0, std::vector<std::vector<std::array<float, 2>>> *layer1){
             std::vector<std::array<float, 2>> newRow;
             //Generate water and stone.
@@ -210,6 +212,7 @@ class Map{
             }
         }
 
+        //Junhao wrote this function
         void display(int x, int y){
             if(moss.size() == 0){
                 generate(&layer0, &moss);
@@ -248,6 +251,7 @@ class Map{
             }
         }
 
+        //Junhao wrote this function
         void tileAction(Player *player){
             //Detect the decoration/item on the tile.
             if(decoration[startRow + player->y][player->x][0] == 0){
@@ -263,6 +267,7 @@ class Map{
             }
         }
 
+        //Junhao wrote this function
         void moveUp(Player *player){
             if(mob[startRow + player->y - 1][player->x][0] != -1){
                 fight(startRow + player->y - 1, player->x, &(player->damage), &(player->health));
@@ -286,6 +291,7 @@ class Map{
             }
         }
 
+        //Junhao wrote this function
         void moveLeft(Player *player){
             if(mob[startRow + player->y][player->x - 1][0] != -1){
                 fight(startRow + player->y, player->x - 1, &(player->damage), &(player->health));
@@ -300,6 +306,7 @@ class Map{
             player->display();
         }
 
+        //Junhao wrote this function
         void moveRight(Player *player){
             if(mob[startRow + player->y][player->x + 1][0] != -1){
                 fight(startRow + player->y, player->x + 1, &(player->damage), &(player->health));
@@ -314,6 +321,7 @@ class Map{
             player->display();
         }
 
+        //Junhao wrote this function
         void moveDown(Player *player){
             if(mob[startRow + player->y + 1][player->x][0] != -1){
                 fight(startRow + player->y + 1, player->x, &(player->damage), &(player->health));
@@ -327,6 +335,7 @@ class Map{
             }
         }
 
+        //Anthony wrote this function
         //Mob combat.
         void fight(int x, int y, int *damage, int *health){
             mobAction = false;
@@ -360,6 +369,7 @@ class Map{
             }
         }
 
+        //Junhao wrote this function
         //Move the mob.
         void mobMove(){
             if(mobAction == true){
@@ -400,6 +410,7 @@ class Map{
             }
         }
 
+        //Junhao wrote this function
         //Collision detection.
         bool collide(int tile){
             for(int i = 0; i < collisionTile.size(); ++i){

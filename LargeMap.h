@@ -15,6 +15,7 @@
 
 #include "Player.h"
 
+//Junhao wrote this entire class
 class LargeMap{
     public:
         struct Tile{

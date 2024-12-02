@@ -87,6 +87,7 @@ extern float stb_perlin_noise3_wrap_nonpow2(float x, float y, float z, int x_wra
 }
 #endif
 
+//The use of Perlin Noise was added by Junhao
 #ifdef STB_PERLIN_IMPLEMENTATION
 
 #include <math.h> // fabs()

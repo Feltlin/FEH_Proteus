@@ -20,6 +20,7 @@ class Player{
             damage = 0;
         }
 
+        //This function was written by Junhao
         void gravityDisplay(){
 
             //Draw the player.
@@ -76,6 +77,7 @@ class Player{
             Image.Close();
         }
 
+        //This function was written by Anthony
         void display(){
 
             //Draw the player.
