@@ -13,7 +13,7 @@
 #include "Item.h"
 
 //Function prototype.
-void fish(FEHImage Image, int* x);
+void fish(FEHImage image, int* x);
 void draw(std::vector<std::vector<int>> *image, int x, int y);
 
 int main(){   
@@ -27,7 +27,7 @@ int main(){
     LargeMap largeMap;
     Player player(10, 14), gravityPlayer(20, 100), largePlayer(0, 0);
     Item item(10, 16);
-    FEHImage Image;
+    FEHImage image;
     int state = 0, menuState = 0, keyState = 0, statState = 0;
     float tx, ty;
     int bx = 302, by = 222;
@@ -61,15 +61,24 @@ int main(){
             //Start screen.
             case 0:
 
+                //Draw the background.
+                image.Open("./Image/MalpatriaBackground.png");
+                image.Draw(0, 0);
+                image.Close();
                 //Draw fish mvoing on the screen.
-                fish(Image, &x);
+                fish(image, &x);
+
+                //Draw the title.
+                image.Open("./Image/Malpatria.png");
+                image.Draw(0, 0);
+                image.Close();
 
                 //Multicolor text with oscillatory motion.
-                text.display("W", foggyValley[4], 136, 50 + amplitude * sin(t / period));
-                text.display("el", foggyValley[3], 142, 50 + amplitude * sin(t / period));
-                text.display("c", foggyValley[2], 154, 50 + amplitude * sin(t / period));
-                text.display("o", foggyValley[1], 160, 50 + amplitude * sin(t / period));
-                text.display("me!", foggyValley[0], 166, 50 + amplitude * sin(t / period));
+                text.display("W", foggyValley[4], 136, 110 + amplitude * sin(t / period));
+                text.display("el", foggyValley[3], 142, 110 + amplitude * sin(t / period));
+                text.display("c", foggyValley[2], 154, 110 + amplitude * sin(t / period));
+                text.display("o", foggyValley[1], 160, 110 + amplitude * sin(t / period));
+                text.display("me!", foggyValley[0], 166, 110 + amplitude * sin(t / period));
                 ++t;
 
                 //Touch anywhere to switch to the next screen.
@@ -481,16 +490,16 @@ int main(){
 }
 
 //Draw the fish on the start screen.
-void fish(FEHImage Image, int* x){
-    Image.Open("./Image/cod.png");
+void fish(FEHImage image, int* x){
+    image.Open("./Image/cod.png");
     for(int i = 0; i < 20; ++i){
         int tempx = *x-50*i;
         while(tempx <= 0){
             tempx += 320;
         }
-        Image.Draw(tempx, 12*i);
+        image.Draw(tempx, 12*i);
     }
-    Image.Close();
+    image.Close();
     (*x > 0) ? --*x : *x = 320;
 }
 
