@@ -189,7 +189,7 @@ int main(){
                 }
                 switch(statState){
                     case 0:
-                        text.display("Max Step: " + std::to_string(map.maxstep), foggyValley[1], 100, 60);
+                        text.display("Max Step: " + std::to_string(map.maxStep), foggyValley[1], 100, 60);
                         break;
 
                     case 1:
