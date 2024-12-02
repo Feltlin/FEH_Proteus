@@ -33,6 +33,7 @@ int main(){
     int bx = 302, by = 222;
     bool hiddenGame = false;
     int jumpyScore = 0;
+    int swordColor = 0;
 
     //Color gradient from light to dark.
     std::vector<int> springBuds = {0xD9ED92, 0xB5E48C, 0x99D98C, 0x76C893, 0x52B69A, 0x34A0A4, 0x168AAD, 0x1A759F, 0x1E6091, 0x184E77};
@@ -380,6 +381,9 @@ int main(){
                         text.drawBorder(foggyValley[0], 10, 10, 310, 230);
                         text.drawBox(foggyValley[1], 10, 10, 310, 230);
                         player.invDisplay(200, 100);
+                        if(swordColor != 0){
+                            text.drawBox(swordColor, 208, 116, 211, 139);
+                        }
                         text.display("HP: " + std::to_string(player.health), lava[3], 20, 200);
                         text.display("Damage: " + std::to_string(player.damage), lava[4], 20, 208);
                         if(text.button("Back", paleMoss[0], 220, 180, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
@@ -389,12 +393,14 @@ int main(){
                         if(text.imageButton("./Image/WoodenSword.png", 20, 20, 0)){
                             if(!text.click[0] && text.click[1]){
                                     player.damage = 3;
+                                    swordColor = 0xAB6826;
                             }
                         }
                         if(map.totalKillCount >= 50){
                             if(text.imageButton("./Image/StoneSword.png", 40, 20, 0)){
                                 if(!text.click[0] && text.click[1]){
                                     player.damage = 5;
+                                    swordColor = 0x6C6865;
                                 }
                             }
                         }
@@ -402,6 +408,7 @@ int main(){
                             if(text.imageButton("./Image/GoldSword.png", 60, 20, 0)){
                                 if(!text.click[0] && text.click[1]){
                                     player.damage = 8;
+                                    swordColor = 0xFFDA12;
                                 }
                             }
                         }
@@ -409,6 +416,7 @@ int main(){
                             if(text.imageButton("./Image/EmeraldSword.png", 80, 20, 0)){
                                 if(!text.click[0] && text.click[1]){
                                     player.damage = 10;
+                                    swordColor = 0x3AD760;
                                 }
                             }
                         }
@@ -416,6 +424,7 @@ int main(){
                             if(text.imageButton("./Image/RubySword.png", 100, 20, 0)){
                                 if(!text.click[0] && text.click[1]){
                                     player.damage = 13;
+                                    swordColor = 0xF7241A;
                                 }
                             }
                         }
@@ -423,6 +432,7 @@ int main(){
                             if(text.imageButton("./Image/DiamondSword.png", 120, 20, 0)){
                                 if(!text.click[0] && text.click[1]){
                                     player.damage = 100;
+                                    swordColor = 0x86F5FB;
                                 }
                             }
                         }
