@@ -103,6 +103,9 @@ class Map{
             if((*layer0).size() >= 100){
                 layer0->erase(layer0->begin() + 100, layer0->end());
                 layer1->erase(layer1->begin() + 100, layer1->end());
+                decoration.erase(decoration.begin() + 100, decoration.end());
+                mob.erase(mob.begin() + 100, mob.end());
+                
             }
             for(int i = height; i >= 0; --i){
                 newRow.clear();
