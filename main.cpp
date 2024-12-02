@@ -31,6 +31,7 @@ int main(){
     int state = 0, menuState = 0, keyState = 0, statState = 0;
     float tx, ty;
     int bx = 302, by = 222;
+    bool hiddenGame = false;
     int jumpyScore = 0;
 
     //Color gradient from light to dark.
@@ -79,46 +80,56 @@ int main(){
 
             //Main screen.
             case 1:
-                if(keyA.continueBind(TK_LEFT)){
-                    gravityPlayer.direction = 'L';
-                    if(gravityPlayer.x > 0){
-                        --gravityPlayer.x;
+                if(!hiddenGame){
+                    if(keyA.bind('A')){
+                        hiddenGame = true;
                     }
                 }
-                if(keyD.continueBind(TK_RIGHT)){
-                    gravityPlayer.direction = 'R';
-                    if(gravityPlayer.x < 320){
-                        ++gravityPlayer.x;
+                else{
+                    if(keyA.continueBind(TK_LEFT)){
+                        gravityPlayer.direction = 'L';
+                        if(gravityPlayer.x > 0){
+                            --gravityPlayer.x;
+                        }
                     }
-                }
-                if(keyS.continueBind(TK_UP)){
-                    if(gravityPlayer.y > 0){
-                        gravityPlayer.y -= 6;
+                    if(keyD.continueBind(TK_RIGHT)){
+                        gravityPlayer.direction = 'R';
+                        if(gravityPlayer.x < 320){
+                            ++gravityPlayer.x;
+                        }
                     }
-                }
-                if(gravityPlayer.y < 224){
-                    gravityPlayer.y += 2;
-                }
-                if(gravityPlayer.x < bx + 16 && gravityPlayer.x + 16 > bx && gravityPlayer.y < by + 16 && gravityPlayer.y + 16 > by){
-                    gravityPlayer.x = 20;
-                    gravityPlayer.y = 100;
-                    bx = 302;
-                    by = 222;
-                    jumpyScore = 0;
-                }
-                if(gravityPlayer.x == bx){
-                    ++jumpyScore;
-                }
-                gravityPlayer.gravityDisplay();
-                text.drawBox(0xffffff, bx, by, bx + 16, by + 16);
-                (bx == 0) ? bx = 302 : bx -= 1 + jumpyScore/10;
+                    if(keyS.continueBind(TK_UP)){
+                        if(gravityPlayer.y > 0){
+                            gravityPlayer.y -= 6;
+                        }
+                    }
+                    if(gravityPlayer.y < 224){
+                        gravityPlayer.y += 2;
+                    }
+                    if(gravityPlayer.x < bx + 16 && gravityPlayer.x + 16 > bx && gravityPlayer.y < by + 16 && gravityPlayer.y + 16 > by){
+                        gravityPlayer.x = 20;
+                        gravityPlayer.y = 100;
+                        bx = 302;
+                        by = 222;
+                        jumpyScore = 0;
+                    }
+                    if(gravityPlayer.x == bx){
+                        ++jumpyScore;
+                    }
+                    gravityPlayer.gravityDisplay();
+                    text.drawBox(0xffffff, bx, by, bx + 16, by + 16);
+                    (bx == 0) ? bx = 302 : bx -= 1 + jumpyScore/10;
 
-                text.display("Jumpy Score", alpenglow[0], 20, 20);
-                text.display(std::to_string(jumpyScore), alpenglow[1], 20, 28);
+                    text.display("Jumpy Knight!", alpenglow[0], 20, 20);
+                    text.display("Use < ^ > for this.", alpenglow[1], 20, 35);
+                    text.display("Not WASD!", alpenglow[2], 20, 45);
+                    text.display(std::to_string(jumpyScore), alpenglow[1], gravityPlayer.x + 4, gravityPlayer.y - 16);
+                }
 
                 //Fun button, may get removed or change place in the future.
                 if(text.button("Touch me", lava[0], 136, 100, 2, lava[0], -1, 0xffffff - lava[0])){
                     text.display("YOU WILL GET TOUCHED.", 0xff0000, 100, 58);
+                    text.display("Try press \'A\'!", lava[8], 120, 220);
                 }
 
                 //Start the main game.
@@ -158,11 +169,6 @@ int main(){
                 //Switch to large map.
                 if(text.button("?(Experimental)", lava[5], 136, 200, 2, lava[5], -1, 0xffffff - lava[5])){
                     state = 20;
-                }
-
-                //Keyboard 'A' press detection.
-                if (tigrKeyHeld(LCD.screen, 'A')) {
-                    text.display("A pressed!", foggyValley[0], 166, 50);
                 }
                 break;
 
@@ -448,6 +454,7 @@ int main(){
                 
             case 20:
                 largeMap.displayPixel(largePlayer.x, largePlayer.y);
+                text.display("Use WASD for this.", alpenglow[1], 20, 20);
                 if(text.button("Back", 0xB4C4AE, 10, 200, 2, paleMoss[2], paleMoss[3], 0xffffff - 0xB4C4AE)){
                     state = 1;
                 }
