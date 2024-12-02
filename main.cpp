@@ -31,6 +31,7 @@ int main(){
     int state = 0, menuState = 0, keyState = 0, statState = 0;
     float tx, ty;
     int bx = 302, by = 222;
+    int jumpyScore = 0;
 
     //Color gradient from light to dark.
     std::vector<int> springBuds = {0xD9ED92, 0xB5E48C, 0x99D98C, 0x76C893, 0x52B69A, 0x34A0A4, 0x168AAD, 0x1A759F, 0x1E6091, 0x184E77};
@@ -98,9 +99,22 @@ int main(){
                 if(gravityPlayer.y < 224){
                     gravityPlayer.y += 2;
                 }
+                if(gravityPlayer.x < bx + 16 && gravityPlayer.x + 16 > bx && gravityPlayer.y < by + 16 && gravityPlayer.y + 16 > by){
+                    gravityPlayer.x = 20;
+                    gravityPlayer.y = 100;
+                    bx = 302;
+                    by = 222;
+                    jumpyScore = 0;
+                }
+                if(gravityPlayer.x == bx){
+                    ++jumpyScore;
+                }
                 gravityPlayer.gravityDisplay();
                 text.drawBox(0xffffff, bx, by, bx + 16, by + 16);
-                (bx == 0) ? bx = 302 : --bx;
+                (bx == 0) ? bx = 302 : bx -= 1 + jumpyScore/10;
+
+                text.display("Jumpy Score", alpenglow[0], 20, 20);
+                text.display(std::to_string(jumpyScore), alpenglow[1], 20, 28);
 
                 //Fun button, may get removed or change place in the future.
                 if(text.button("Touch me", lava[0], 136, 100, 2, lava[0], -1, 0xffffff - lava[0])){
