@@ -127,7 +127,7 @@ int main(){
                     }
                     gravityPlayer.gravityDisplay();
                     text.drawBox(0xffffff, bx, by, bx + 16, by + 16);
-                    (bx == 0) ? bx = 302 : bx -= 1 + jumpyScore/10;
+                    (bx <= 0) ? bx = 302 : bx -= 1 + jumpyScore/10;
 
                     text.display("Jumpy Knight!", alpenglow[0], 20, 20);
                     text.display("Use < ^ > for this.", alpenglow[1], 20, 35);
